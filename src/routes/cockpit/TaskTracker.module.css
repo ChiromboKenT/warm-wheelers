@@ -1,0 +1,92 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.controls input,
+.controls select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.controls input {
+  flex: 1;
+  min-width: 200px;
+}
+
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--ink);
+}
+
+.day {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+
+.dh {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-left: 3px solid var(--rust);
+  flex-wrap: wrap;
+}
+
+.dateLabel {
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.phase {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rust);
+  font-weight: 700;
+}
+
+.focus {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.prog {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.empty {
+  color: var(--muted);
+  padding: 20px;
+  text-align: center;
+}
+
+.error {
+  color: var(--rust);
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+
+@media (max-width: 720px) {
+  .controls input {
+    min-width: 100%;
+    flex-basis: 100%;
+  }
+
+  .prog {
+    margin-left: 0;
+    width: 100%;
+  }
+}

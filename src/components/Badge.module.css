@@ -1,0 +1,39 @@
+.badge {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  margin: 4px 6px 0 0;
+}
+
+.p0 {
+  background: var(--p0-bg);
+  color: var(--p0-fg);
+}
+
+.p1 {
+  background: var(--p1-bg);
+  color: var(--p1-fg);
+}
+
+.p2 {
+  background: var(--p2-bg);
+  color: var(--p2-fg);
+}
+
+.p3 {
+  background: var(--p3-bg);
+  color: var(--p3-fg);
+}
+
+.decision {
+  background: #fff;
+  color: var(--rust);
+  border: 1px dashed var(--rust);
+}
+
+.plain {
+  background: var(--cream);
+  color: var(--brown);
+}

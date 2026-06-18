@@ -1,0 +1,18 @@
+.wrap {
+  max-width: 1000px;
+  margin: 26px auto;
+  padding: 0 22px;
+}
+
+.wrap h2 {
+  font-family: var(--font-display);
+  color: var(--brown);
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  color: var(--muted);
+}

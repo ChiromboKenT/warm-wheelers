@@ -1,0 +1,43 @@
+.label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--rust);
+  font-weight: 700;
+}
+
+.units {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.u {
+  background: var(--brown);
+  color: #ffe8cf;
+  border-radius: 10px;
+  padding: 8px 12px;
+  text-align: center;
+  box-shadow: var(--shadow-sticker);
+}
+
+.u b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 30px;
+  line-height: 1;
+}
+
+.u span {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.tbd {
+  font-family: var(--font-ui);
+  color: var(--brown);
+}

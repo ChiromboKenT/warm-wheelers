@@ -1,0 +1,22 @@
+.rail {
+  position: relative;
+  background: #fff7e9;
+  border: 1px solid #e6cf9f;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.track {
+  display: flex;
+  gap: 26px;
+  padding: 10px 16px;
+  white-space: nowrap;
+  width: max-content;
+  font-size: 13px;
+  color: var(--brown);
+  animation: ww-march 24s linear infinite;
+}
+
+.track b {
+  color: var(--rust);
+}

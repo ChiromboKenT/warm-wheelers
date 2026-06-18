@@ -1,0 +1,12 @@
+.wrap {
+  height: 9px;
+  background: #efe7d6;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mustard), var(--rust));
+  transition: width 0.3s;
+}
