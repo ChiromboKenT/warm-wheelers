@@ -10,7 +10,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
-    "seed": "tsx --env-file=.env seed/seed.ts"
+    "seed": "tsx --experimental-websocket --env-file=.env seed/seed.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
