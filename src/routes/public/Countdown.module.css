@@ -8,9 +8,11 @@
 }
 
 .units {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 6px;
+  max-width: 320px;
 }
 
 .u {
@@ -40,4 +42,18 @@
 .tbd {
   font-family: var(--font-ui);
   color: var(--brown);
+}
+
+@media (max-width: 380px) {
+  .units {
+    gap: 7px;
+  }
+
+  .u {
+    padding: 8px 6px;
+  }
+
+  .u b {
+    font-size: 27px;
+  }
 }

@@ -38,6 +38,10 @@
   align-items: center;
 }
 
+.inner > * {
+  min-width: 0;
+}
+
 .cap {
   font-size: 11px;
   letter-spacing: 0.28em;
@@ -102,5 +106,21 @@
 
   .title {
     font-size: 44px;
+  }
+}
+
+@media (max-width: 380px) {
+  .inner {
+    padding: 30px 18px 24px;
+  }
+
+  .cap {
+    letter-spacing: 0.16em;
+    font-size: 10px;
+    max-width: 100%;
+  }
+
+  .title {
+    font-size: 40px;
   }
 }

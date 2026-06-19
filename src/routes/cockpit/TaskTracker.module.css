@@ -1,8 +1,9 @@
 .controls {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(180px, 260px) minmax(140px, 180px) auto;
   gap: 10px;
-  margin-bottom: 14px;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .controls input,
@@ -13,17 +14,38 @@
   border-radius: 8px;
 }
 
-.controls input {
-  flex: 1;
-  min-width: 200px;
+.search {
+  width: 100%;
+  min-width: 0;
 }
 
-.controls label {
+.checks {
   display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.checks label {
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   font-size: 14px;
   color: var(--ink);
+  white-space: nowrap;
+}
+
+.checks input {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+}
+
+.count {
+  margin: 0 0 10px;
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .day {
@@ -32,20 +54,26 @@
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 14px;
+  content-visibility: auto;
+  contain-intrinsic-size: 360px;
 }
 
 .dh {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: 12px;
   padding: 11px 14px;
   border-left: 3px solid var(--rust);
-  flex-wrap: wrap;
 }
 
 .dateLabel {
   font-weight: 700;
   color: var(--muted);
+}
+
+.dayTitle {
+  min-width: 0;
 }
 
 .phase {
@@ -62,9 +90,20 @@
 }
 
 .prog {
-  margin-left: auto;
   font-size: 12px;
   color: var(--muted);
+  white-space: nowrap;
+}
+
+.more {
+  display: block;
+  margin: 4px auto 0;
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
 }
 
 .empty {
@@ -79,14 +118,30 @@
   font-size: 14px;
 }
 
-@media (max-width: 720px) {
-  .controls input {
-    min-width: 100%;
-    flex-basis: 100%;
+@media (max-width: 840px) {
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search {
+    grid-column: 1 / -1;
+  }
+
+  .checks {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .dh {
+    grid-template-columns: auto minmax(0, 1fr);
   }
 
   .prog {
-    margin-left: 0;
-    width: 100%;
+    grid-column: 1 / -1;
   }
 }

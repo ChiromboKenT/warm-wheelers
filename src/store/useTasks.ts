@@ -33,6 +33,9 @@ export function useTasks() {
   const setStatus = useCallback(async (id: string, status: Status): Promise<string | null> => {
     const done_at = status === "done" ? new Date().toISOString() : null;
     const { error: err } = await supabase.from("tasks").update({ status, done_at }).eq("id", id);
+    if (!err) {
+      setTasks((current) => current.map((task) => (task.id === id ? { ...task, status, done_at } : task)));
+    }
     return err?.message ?? null;
   }, []);
 

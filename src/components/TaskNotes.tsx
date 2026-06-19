@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useNotes } from "../../store/useNotes";
-import { useAuth } from "../../store/useAuth";
-import styles from "./Notes.module.css";
+import { useNotes } from "../store/useNotes";
+import { useAuth } from "../store/useAuth";
+import styles from "./TaskRow.module.css";
 
-export function Notes() {
-  const { notes, loading, error, add } = useNotes();
+export function TaskNotes({ taskId }: { taskId: string }) {
+  const { notes, loading, error, add } = useNotes(taskId);
   const { session } = useAuth();
   const author = session?.user.email ?? "team";
   const [body, setBody] = useState("");
@@ -30,35 +30,31 @@ export function Notes() {
     }
   };
 
-  if (loading) {
-    return <p className={styles.empty}>Loading notes...</p>;
-  }
-
   return (
-    <div>
+    <div className={styles.notes}>
       {(error || actionError) && (
-        <p className={styles.error} role="alert">
+        <div className={styles.rule} role="alert">
           {error ?? actionError}
-        </p>
+        </div>
       )}
-      <div className={styles.composer}>
-        <textarea
-          placeholder="Team note, link, blocker, idea..."
-          aria-label="New team note"
-          value={body}
-          onChange={(event) => setBody(event.target.value)}
-        />
-        <button type="button" disabled={!body.trim() || posting} onClick={post}>
-          {posting ? "Posting..." : "Post note"}
-        </button>
-      </div>
-      {notes.length === 0 ? (
-        <p className={styles.empty}>No team notes yet.</p>
+      <textarea
+        aria-label={`New note for ${taskId}`}
+        placeholder="Add task note..."
+        value={body}
+        onChange={(event) => setBody(event.target.value)}
+      />
+      <button type="button" disabled={!body.trim() || posting} onClick={post}>
+        {posting ? "Posting..." : "Post note"}
+      </button>
+      {loading ? (
+        <div className={styles.noteMeta}>Loading notes...</div>
+      ) : notes.length === 0 ? (
+        <div className={styles.noteMeta}>No notes for this task yet.</div>
       ) : (
         notes.map((note) => (
           <div key={note.id} className={styles.note}>
             <div>{note.body}</div>
-            <div className={styles.meta}>
+            <div className={styles.noteMeta}>
               {note.author ?? "team"} - {new Date(note.created_at).toLocaleString()}
             </div>
           </div>

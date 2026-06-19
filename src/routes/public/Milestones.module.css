@@ -6,6 +6,27 @@
   overflow: hidden;
 }
 
+.rail::before,
+.rail::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 32px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.rail::before {
+  left: 0;
+  background: linear-gradient(90deg, #fff7e9, rgba(255, 247, 233, 0));
+}
+
+.rail::after {
+  right: 0;
+  background: linear-gradient(270deg, #fff7e9, rgba(255, 247, 233, 0));
+}
+
 .track {
   display: flex;
   gap: 26px;

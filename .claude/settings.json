@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(claude mcp *)",
+      "PowerShell($cmd = Get-Command claude -ErrorAction SilentlyContinue; if \\($cmd\\) { $cmd.Source } else { \"not found on PATH\" })"
+    ]
+  }
+}

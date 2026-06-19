@@ -34,9 +34,14 @@ export function useNotes(taskId?: string) {
 
   const add = useCallback(
     async (body: string, author: string): Promise<string | null> => {
-      const { error: err } = await supabase
+      const { data, error: err } = await supabase
         .from("notes")
-        .insert({ task_id: taskId ?? null, body, author });
+        .insert({ task_id: taskId ?? null, body, author })
+        .select("*")
+        .single();
+      if (!err && data) {
+        setNotes((current) => [data as Note, ...current.filter((note) => note.id !== (data as Note).id)]);
+      }
       return err?.message ?? null;
     },
     [taskId],

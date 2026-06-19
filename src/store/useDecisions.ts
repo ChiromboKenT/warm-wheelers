@@ -32,15 +32,25 @@ export function useDecisions() {
 
   const resolve = useCallback(
     async (id: string, answer: string, decided_by: string): Promise<string | null> => {
+      const decided_at = new Date().toISOString();
       const { error: err } = await supabase
         .from("decisions")
         .update({
           answer,
           status: "resolved",
           decided_by,
-          decided_at: new Date().toISOString(),
+          decided_at,
         })
         .eq("id", id);
+      if (!err) {
+        setDecisions((current) =>
+          current.map((decision) =>
+            decision.id === id
+              ? { ...decision, answer, status: "resolved", decided_by, decided_at }
+              : decision,
+          ),
+        );
+      }
       return err?.message ?? null;
     },
     [],
@@ -56,6 +66,15 @@ export function useDecisions() {
         decided_at: null,
       })
       .eq("id", id);
+    if (!err) {
+      setDecisions((current) =>
+        current.map((decision) =>
+          decision.id === id
+            ? { ...decision, status: "open", answer: null, decided_by: null, decided_at: null }
+            : decision,
+        ),
+      );
+    }
     return err?.message ?? null;
   }, []);
 

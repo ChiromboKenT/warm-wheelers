@@ -9,16 +9,24 @@ export function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [err, setErr] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const submit = async (e: FormEvent) => {
     e.preventDefault();
     setErr("");
-    const { error } = await signIn(email, password);
-    if (error) {
-      setErr(error.message);
-      return;
+    setSubmitting(true);
+    try {
+      const { error } = await signIn(email, password);
+      if (error) {
+        setErr(error.message);
+        return;
+      }
+      navigate("/build");
+    } catch (error) {
+      setErr(error instanceof Error ? error.message : "Unable to sign in.");
+    } finally {
+      setSubmitting(false);
     }
-    navigate("/build");
   };
 
   return (
@@ -42,7 +50,9 @@ export function Login() {
           required
           autoComplete="current-password"
         />
-        <button type="submit">Enter the workshop</button>
+        <button type="submit" disabled={submitting}>
+          {submitting ? "Entering..." : "Enter the workshop"}
+        </button>
         {err && <div className={styles.err}>{err}</div>}
       </form>
     </div>

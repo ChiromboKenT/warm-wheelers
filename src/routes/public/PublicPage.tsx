@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTasks } from "../../store/useTasks";
 import { useSettings } from "../../store/useSettings";
+import { useMilestones } from "../../store/useMilestones";
 import { deriveMetrics } from "../../domain/progress";
 import { Countdown } from "./Countdown";
 import { Milestones } from "./Milestones";
@@ -12,40 +13,57 @@ import styles from "./PublicPage.module.css";
 export function PublicPage() {
   const { tasks, loading: tasksLoading, error: tasksError } = useTasks();
   const { settings, loading: settingsLoading, error: settingsError } = useSettings();
+  const { milestones, error: milestonesError } = useMilestones();
   const m = deriveMetrics(tasks);
-  const displayError = tasksError ?? settingsError;
+  const displayError = tasksError ?? settingsError ?? milestonesError;
 
   const { railItems, currentPhase } = useMemo(() => {
-    const done = tasks.filter((t) => t.status === "done");
+    const milestoneItems = milestones.map((milestone) => {
+      const date = milestone.target_date
+        ? new Date(`${milestone.target_date}T00:00:00`).toLocaleDateString()
+        : "date TBD";
+      return (
+        <>
+          <b>{milestone.achieved ? "Done" : "Next"}</b>: {milestone.label} <b>{date}</b>
+        </>
+      );
+    });
+    const done = tasks
+      .filter((t) => t.status === "done")
+      .slice()
+      .sort((a, b) => (a.done_at ?? a.id).localeCompare(b.done_at ?? b.id));
     const lastDone = done[done.length - 1];
     const next = tasks.find((t) => t.status !== "done");
 
     return {
       currentPhase: next ? "the build" : "race readiness",
-      railItems: [
-        <>
-          <b>{m.percent}%</b> built
-        </>,
-        lastDone ? (
-          <>
-            Latest: <b>{lastDone.id}</b> done
-          </>
-        ) : (
-          "Build starting soon"
-        ),
-        next ? (
-          <>
-            Up next: <b>{next.id}</b>
-          </>
-        ) : (
-          "Race ready"
-        ),
-        <>
-          <b>{m.completed}</b> of <b>{m.total}</b> tasks complete
-        </>,
-      ],
+      railItems:
+        milestoneItems.length > 0
+          ? milestoneItems
+          : [
+              <>
+                <b>{m.percent}%</b> built
+              </>,
+              lastDone ? (
+                <>
+                  Latest: <b>{lastDone.id}</b> done
+                </>
+              ) : (
+                "Build starting soon"
+              ),
+              next ? (
+                <>
+                  Up next: <b>{next.id}</b>
+                </>
+              ) : (
+                "Race ready"
+              ),
+              <>
+                <b>{m.completed}</b> of <b>{m.total}</b> tasks complete
+              </>,
+            ],
     };
-  }, [tasks, m.percent, m.completed, m.total]);
+  }, [milestones, tasks, m.percent, m.completed, m.total]);
 
   if (tasksLoading || settingsLoading) {
     return <p className={styles.status}>Loading…</p>;

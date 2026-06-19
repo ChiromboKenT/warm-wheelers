@@ -1,6 +1,6 @@
 .cart {
   position: relative;
-  width: 320px;
+  width: min(320px, 100%);
   height: 210px;
 }
 
