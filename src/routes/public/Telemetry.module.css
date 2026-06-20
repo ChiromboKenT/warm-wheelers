@@ -1,0 +1,209 @@
+.wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 30px;
+  position: relative;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.dialCard,
+.tile {
+  background: linear-gradient(180deg, #2f2013, #1c120b);
+  border: 1px solid #5a3f27;
+  border-radius: var(--radius-lg);
+  box-shadow:
+    0 22px 46px -22px rgba(0, 0, 0, 0.85),
+    0 0 0 1px rgba(255, 178, 96, 0.05),
+    inset 0 1px 0 rgba(255, 185, 110, 0.13);
+}
+
+.dialCard {
+  padding: 16px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.dialCard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(70% 60% at 50% 30%, rgba(255, 107, 26, 0.16), transparent 70%);
+  pointer-events: none;
+}
+
+.dial {
+  width: 100%;
+  max-width: 196px;
+  height: auto;
+}
+
+.track {
+  fill: none;
+  stroke: #3a2a1c;
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.value {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 12;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 26, 0.8));
+  transition: stroke-dasharray 1s ease;
+}
+
+.tick {
+  stroke: #6b513a;
+  stroke-width: 2;
+}
+.tickMajor {
+  stroke: var(--flame-pale);
+  stroke-width: 2.4;
+  opacity: 0.85;
+}
+
+/* the live position dot, riding the value arc */
+.tip {
+  fill: var(--flame-pale);
+  stroke: var(--ember);
+  stroke-width: 3;
+  filter: drop-shadow(0 0 6px rgba(255, 107, 26, 0.9));
+}
+
+.bigPct {
+  fill: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 52px;
+  text-anchor: middle;
+}
+.pctSign {
+  fill: var(--flame);
+  font-size: 24px;
+}
+
+.dialLabel {
+  fill: var(--flame-pale);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  text-anchor: middle;
+}
+
+.dialFoot {
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.06em;
+  color: #c9b89a;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  text-transform: uppercase;
+}
+.dialFoot b {
+  color: var(--flame);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #41d67a;
+  box-shadow: 0 0 8px #41d67a;
+  animation: ww-pulse 1.8s ease-in-out infinite;
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tile {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 96px;
+  position: relative;
+  overflow: hidden;
+}
+
+.tileAccent {
+  border-color: #7a3a16;
+}
+.tileAccent::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--grad-flame);
+}
+
+.tileK {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #b89a78;
+}
+
+.tileV {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(26px, 3.4vw, 38px);
+  line-height: 1.02;
+  color: var(--paper);
+  margin: 4px 0 2px;
+  letter-spacing: 0.01em;
+}
+
+.tileAccent .tileV {
+  font-size: clamp(18px, 2.4vw, 26px);
+  color: var(--flame);
+}
+
+.tileSub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: #8f7a5e;
+}
+
+@media (max-width: 820px) {
+  .wrap {
+    grid-template-columns: 1fr;
+    padding: 0 22px;
+  }
+  .dialCard {
+    flex-direction: row;
+    justify-content: center;
+    gap: 18px;
+  }
+  .dial {
+    max-width: 150px;
+  }
+  .dialFoot {
+    align-self: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .tiles {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .dialCard {
+    flex-direction: column;
+  }
+}

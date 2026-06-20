@@ -1,0 +1,333 @@
+.section {
+  padding: 88px 22px 112px;
+  background:
+    radial-gradient(900px 520px at 15% 0%, rgba(255, 140, 43, 0.08), transparent 60%),
+    var(--cream-soft);
+  position: relative;
+}
+
+.head {
+  max-width: 720px;
+  margin: 0 auto 44px;
+  text-align: center;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--rust);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(32px, 6vw, 60px);
+  line-height: 0.98;
+  margin: 8px 0 12px;
+  color: var(--brown);
+}
+
+.lead {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+/* ---- the meandering downhill track ---- */
+.trackWrap {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.road {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 0;
+}
+
+/* road body: a warm tan ribbon with a dotted centre line */
+.roadCasing {
+  fill: none;
+  stroke: #d8ad65;
+  stroke-width: 22;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.roadBase {
+  fill: none;
+  stroke: #f0dcae;
+  stroke-width: 15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.roadDash {
+  fill: none;
+  stroke: #9a6b1e;
+  stroke-width: 2.4;
+  stroke-dasharray: 1 15;
+  stroke-linecap: round;
+  opacity: 0.65;
+}
+/* covered ground,from the drop-in down to the active phase */
+.roadHot {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 7px rgba(255, 107, 26, 0.6));
+}
+
+.startDot {
+  fill: var(--rust-deep);
+}
+
+.finishDisc {
+  fill: var(--soot);
+  stroke: var(--paper);
+  stroke-width: 2;
+}
+.finishFlag {
+  fill: var(--paper);
+}
+
+/* end-cap labels */
+.endcaps {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.capTop,
+.capBottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--rust-deep);
+  background: var(--cream-soft);
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.capTop {
+  top: -14px;
+}
+.capBottom {
+  bottom: -14px;
+  color: var(--paper);
+  background: var(--soot);
+}
+
+/* ---- nodes ---- */
+.nodes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.node {
+  position: relative;
+  min-height: 132px;
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+.node.in {
+  opacity: 1;
+}
+
+.medallion {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  background: var(--paper);
+  border: 2px solid var(--steel-d);
+  color: var(--ink-soft);
+  box-shadow: 0 0 0 5px var(--cream-soft), 0 2px 6px rgba(90, 30, 12, 0.25);
+}
+.l .medallion {
+  left: 36%;
+}
+.r .medallion {
+  left: 64%;
+}
+
+.card {
+  width: 36%;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 15px 17px;
+  box-shadow: var(--shadow-lift);
+}
+/* inner padding keeps the title clear of the medallion sitting on the card edge */
+.l .card {
+  margin-right: auto;
+  text-align: right;
+  padding-right: 40px;
+}
+.r .card {
+  margin-left: auto;
+  padding-left: 40px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+.l .cardTop {
+  flex-direction: row-reverse;
+}
+
+.phaseNo {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--cream-2);
+  color: var(--ink-soft);
+}
+
+.name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 23px;
+  line-height: 1.05;
+  margin: 8px 0 4px;
+  color: var(--brown);
+}
+
+.desc {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+/* ---- states ---- */
+.done .medallion {
+  background: var(--rust);
+  border-color: var(--rust-deep);
+  color: #fff;
+}
+.done .badge {
+  background: #f0d9b6;
+  color: var(--rust-deep);
+}
+
+.active.in {
+  opacity: 1;
+}
+.active .medallion {
+  background: var(--soot);
+  border-color: var(--ember);
+  box-shadow: 0 0 0 6px var(--cream-soft), var(--glow-ember);
+}
+.active .puck {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--grad-flame);
+  box-shadow: 0 0 12px var(--flame);
+  animation: ww-pulse 1.8s ease-in-out infinite;
+}
+.active .card {
+  border-color: var(--ember);
+  box-shadow: var(--shadow-lift), 0 0 0 2px rgba(255, 107, 26, 0.22);
+}
+.active .name {
+  color: var(--rust-deep);
+}
+.active .badge {
+  background: var(--grad-flame);
+  color: var(--soot);
+  font-weight: 700;
+}
+
+.upcoming .medallion {
+  background: var(--cream-soft);
+  border-color: var(--paper-line);
+  color: var(--muted);
+}
+.upcoming .lock {
+  color: var(--muted);
+  opacity: 0.85;
+}
+/* deactivated cards read back, but the station markers stay legible on the road */
+.upcoming .card {
+  box-shadow: none;
+  border-style: dashed;
+  border-color: var(--paper-line);
+  opacity: 0.6;
+  filter: saturate(0.7);
+}
+.upcoming .badge {
+  background: transparent;
+  border: 1px solid var(--paper-line);
+  color: var(--muted);
+}
+
+/* ---- responsive: collapse to a left-rail descent ---- */
+@media (max-width: 760px) {
+  .trackWrap {
+    max-width: 560px;
+  }
+  .node {
+    min-height: 118px;
+  }
+  .l .medallion {
+    left: 32px;
+  }
+  .r .medallion {
+    left: 46px;
+  }
+  .card {
+    width: auto;
+    margin-left: 84px !important;
+    margin-right: 0 !important;
+    text-align: left !important;
+  }
+  .l .cardTop {
+    flex-direction: row;
+  }
+  .capTop,
+  .capBottom {
+    left: 8px;
+    transform: none;
+  }
+}

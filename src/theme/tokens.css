@@ -1,29 +1,63 @@
 :root {
-  --cream: #f1e0c2;
-  --cream-soft: #faf6ee;
-  --paper: #ffffff;
-  --rust: #c8471f;
-  --rust-deep: #b03a14;
+  /* ---- Paper / warm base ---- */
+  --cream: #f3e4c6;
+  --cream-2: #ecd6ad;
+  --cream-soft: #f7eed9;
+  --paper: #fcf5e7;
+  --paper-line: #e7d4ac;
+
+  /* ---- Heat / ember (primary) ---- */
+  --ember: #ff6b1a;
+  --ember-bright: #ff8c2b;
+  --flame: #ffb324;
+  --flame-pale: #ffd66b;
+  --rust: #c8431c;
+  --rust-deep: #9a2e10;
   --mustard: #e2b773;
   --amber: #d99a3a;
-  --brown: #7a2a12;
-  --ink: #2f2a23;
-  --muted: #8a7d6a;
-  --line: #ece3d2;
 
-  --p0-bg: #fbe7e0;
+  /* ---- Ink / structure ---- */
+  --brown: #5a1e0c;
+  --ink: #2a1d12;
+  --ink-soft: #6b4a30;
+  --soot: #170f09;
+  --soot-2: #241710;
+  --soot-3: #33231a;
+  --muted: #9a866a;
+
+  /* ---- Blueprint / technical ---- */
+  --blueprint: #2f7f9e;
+  --blueprint-bright: #4fb0cf;
+  --steel: #8d8676;
+  --steel-d: #565146;
+  --line: #e6d6b4;
+
+  /* ---- Priority chips (cockpit) ---- */
+  --p0-bg: #fbe1d8;
   --p0-fg: #b03a14;
   --p1-bg: #f6ecd6;
   --p1-fg: #8a5a14;
-  --p2-bg: #e7eef0;
-  --p2-fg: #3a5a60;
-  --p3-bg: #eee7d8;
+  --p2-bg: #e3eef1;
+  --p2-fg: #2f5a64;
+  --p3-bg: #ece3d2;
   --p3-fg: #6b5a3a;
 
-  --font-display: Georgia, "Times New Roman", serif;
-  --font-ui: "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-mono: "Courier New", ui-monospace, monospace;
+  /* ---- Type ---- */
+  --font-display: "Big Shoulders Display", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: "Space Mono", ui-monospace, "Courier New", monospace;
+  --font-ui: "Fraunces", Georgia, serif;
 
-  --radius: 12px;
-  --shadow-sticker: 4px 4px 0 rgba(122, 42, 18, 0.25);
+  /* ---- Shape & depth ---- */
+  --radius: 14px;
+  --radius-lg: 22px;
+  --shadow-sticker: 5px 5px 0 rgba(90, 30, 12, 0.22);
+  --shadow-lift: 0 18px 40px -18px rgba(90, 30, 12, 0.55);
+  --shadow-deep: 0 30px 70px -28px rgba(23, 15, 9, 0.7);
+  --glow-ember: 0 0 36px rgba(255, 107, 26, 0.55);
+
+  /* ---- Heat gradients ---- */
+  --grad-flame: linear-gradient(180deg, var(--flame) 0%, var(--ember-bright) 45%, var(--rust) 100%);
+  --grad-sky: radial-gradient(125% 120% at 68% 8%, #fbeccb 0%, #f1d49b 38%, #e6a857 72%, #d6852f 100%);
+  --grad-soot: radial-gradient(120% 90% at 50% 0%, #2c1c12 0%, #1a110a 55%, #110b06 100%);
 }

@@ -1,0 +1,68 @@
+.svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+}
+
+/* grounded soft shadow,blurred once, never animated */
+.shadow {
+  fill: rgba(23, 15, 9, 0.3);
+}
+
+/* wheels roll */
+.roll {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ww-roll 2.6s linear infinite;
+}
+
+/* whole rig gently bobs over the road */
+.bob {
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: ww-bob 3.4s ease-in-out infinite;
+}
+
+/* grille panels flicker like a lit burner,opacity only, no filter (cheap to paint) */
+.panel {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: ww-flick 1.9s ease-in-out infinite;
+}
+.panel2 {
+  animation-delay: 0.45s;
+}
+.panel3 {
+  animation-delay: 0.9s;
+}
+
+/* static bloom behind the grille,a soft flame halo, painted once */
+.bloom {
+  opacity: 0.5;
+}
+
+/* visor flickers,fill lives in the markup so it stays lit when motion is off */
+.visor {
+  animation: ww-flick 2.4s ease-in-out infinite;
+}
+
+/* airflow streamlines,dashed look is always on, the drift is gated by .streamRun */
+.stream {
+  stroke-dasharray: 16 14;
+}
+.streamRun {
+  animation: ww-stream 5.5s linear infinite;
+}
+.stream2 {
+  animation-duration: 7s;
+}
+.stream3 {
+  animation-duration: 9s;
+}
+
+/* wind vane spins slowly */
+.vane {
+  transform-box: fill-box;
+  animation: ww-spin 3.8s linear infinite;
+}
