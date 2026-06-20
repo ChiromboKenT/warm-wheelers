@@ -1,0 +1,234 @@
+.section {
+  padding: 88px 22px 104px;
+  background:
+    radial-gradient(820px 480px at 85% 0%, rgba(255, 140, 43, 0.1), transparent 60%),
+    var(--cream-soft);
+  position: relative;
+}
+
+.inner {
+  max-width: 1040px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+/* ---- left: invitation ---- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--rust);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(38px, 5.4vw, 64px);
+  line-height: 0.96;
+  margin: 10px 0 14px;
+  color: var(--brown);
+}
+
+.lead {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 420px;
+  margin: 0 0 24px;
+}
+
+.points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.points li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+.points li span {
+  width: 9px;
+  height: 9px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--grad-flame);
+  box-shadow: 0 0 9px rgba(255, 107, 26, 0.55);
+}
+
+/* ---- right: the form card ---- */
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 28px 26px;
+  box-shadow: var(--shadow-lift);
+  position: relative;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--grad-flame);
+}
+
+.field {
+  margin-bottom: 16px;
+}
+.field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 7px;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  color: var(--ink);
+  background: var(--cream-soft);
+  border: 1.5px solid var(--paper-line);
+  border-radius: 10px;
+  padding: 11px 13px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+.field textarea {
+  resize: vertical;
+  min-height: 104px;
+  line-height: 1.5;
+}
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #b39c7d;
+}
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  background: var(--paper);
+  border-color: var(--ember);
+  box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.18);
+}
+
+/* honeypot — kept out of view and off assistive tech / tab order */
+.hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.send {
+  width: 100%;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--soot);
+  background: var(--grad-flame);
+  border: none;
+  border-radius: 30px;
+  padding: 14px 20px;
+  cursor: pointer;
+  box-shadow: var(--glow-ember);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+.send:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+.send:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.fineprint {
+  margin: 12px 0 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+
+.error {
+  margin: 0 0 14px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  color: var(--rust-deep);
+  background: #fbe1d8;
+  border: 1px solid #f0c4b4;
+  border-radius: 10px;
+  padding: 9px 12px;
+}
+
+/* ---- success state ---- */
+.doneCard {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 280px;
+  gap: 6px;
+}
+.doneMark {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--grad-flame);
+  color: var(--soot);
+  font-size: 28px;
+  font-weight: 800;
+  box-shadow: var(--glow-ember);
+  margin-bottom: 8px;
+}
+.doneTitle {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 30px;
+  color: var(--brown);
+  margin: 0;
+}
+.doneCopy {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 320px;
+  margin: 0;
+}
+
+@media (max-width: 820px) {
+  .section {
+    padding: 64px 20px 80px;
+  }
+  .inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .lead {
+    max-width: none;
+  }
+}

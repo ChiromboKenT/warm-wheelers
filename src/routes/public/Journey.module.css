@@ -307,8 +307,17 @@
   .trackWrap {
     max-width: 560px;
   }
+  /* left-rail descent: let cards size to their content and sit on an even
+     rhythm instead of floating inside a tall fixed-height node */
+  .nodes {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    /* clear the "drop-in · phase 01" cap that sits at the top of the rail */
+    padding-top: 34px;
+  }
   .node {
-    min-height: 118px;
+    min-height: auto;
   }
   .l .medallion {
     left: 32px;

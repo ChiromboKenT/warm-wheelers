@@ -64,3 +64,12 @@ export interface Settings {
   event_date: string | null;
   freeze_date: string | null;
 }
+
+export interface Message {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  message: string;
+  handled: boolean;
+}

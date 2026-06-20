@@ -305,6 +305,11 @@
   color: #8f7a5e;
   margin-top: 4px;
 }
+.footLinks {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
 .footLink {
   font-family: var(--font-mono);
   font-size: 13px;

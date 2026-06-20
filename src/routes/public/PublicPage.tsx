@@ -9,6 +9,7 @@ import { Telemetry } from "./Telemetry";
 import { Cutaway } from "./Cutaway";
 import { Journey } from "./Journey";
 import { StoryTeaser } from "./StoryTeaser";
+import { Contact } from "./Contact";
 import { PHASES, ACTIVE_PHASE } from "./phases";
 import styles from "./PublicPage.module.css";
 
@@ -160,6 +161,7 @@ export function PublicPage() {
       <Cutaway />
       <Journey />
       <StoryTeaser phaseName={phaseName} />
+      <Contact />
 
       <footer className={styles.footer}>
         <div className={styles.footInner}>
@@ -167,9 +169,14 @@ export function PublicPage() {
             Warm Wheelers
             <span>Red Bull Soapbox · build in public</span>
           </div>
-          <Link to="/build" className={styles.footLink}>
-            Team cockpit →
-          </Link>
+          <div className={styles.footLinks}>
+            <a href="#contact" className={styles.footLink}>
+              Get in touch →
+            </a>
+            <Link to="/build" className={styles.footLink}>
+              Team cockpit →
+            </Link>
+          </div>
         </div>
       </footer>
     </div>
