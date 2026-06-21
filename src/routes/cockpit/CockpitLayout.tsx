@@ -28,6 +28,9 @@ export function CockpitLayout() {
           <NavLink to="/build/decisions" className={linkClass}>
             Decisions
           </NavLink>
+          <NavLink to="/build/validation" className={linkClass}>
+            Validation
+          </NavLink>
           <NavLink to="/build/notes" className={linkClass}>
             Notes
           </NavLink>

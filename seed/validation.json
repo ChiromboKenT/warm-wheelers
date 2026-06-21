@@ -1,0 +1,493 @@
+[
+  {
+    "id": "S1",
+    "category": "safety",
+    "criterion": "Frame survives the course jump",
+    "target": "Withstand design landing load of 3 g vertical at race mass",
+    "method": "FEA",
+    "acceptance": "Factor of safety ≥ 2.0 on yield; no permanent deformation",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S2",
+    "category": "safety",
+    "criterion": "Roll protection",
+    "target": "Structure protects head/torso if cart tips or rolls",
+    "method": "FEA + RULES",
+    "acceptance": "Driver's head inside structural envelope at full roll; meets RB roll requirement",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S3",
+    "category": "safety",
+    "criterion": "Driver restraint",
+    "target": "Min 4-point harness, anchored to frame",
+    "method": "BENCH + RULES",
+    "acceptance": "Anchors hold ≥ 5 g forward pull without failure",
+    "gate": "Build",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S4",
+    "category": "safety",
+    "criterion": "Driver egress",
+    "target": "Self-extraction, no assistance, no tools",
+    "method": "REHEARSE",
+    "acceptance": "Out in ≤ 10 s in full bottle costume + helmet",
+    "gate": "Pre-race",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S5",
+    "category": "safety",
+    "criterion": "Helmet & PPE",
+    "target": "Certified helmet; gloves; closed shoes",
+    "method": "RULES",
+    "acceptance": "Present and compliant at scrutineering",
+    "gate": "Pre-race",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S6",
+    "category": "safety",
+    "criterion": "Driver visibility",
+    "target": "Forward field of view around shell + costume",
+    "method": "CAD + TRACK",
+    "acceptance": "≥ 100° horizontal clear forward arc; cones visible at braking distance",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S7",
+    "category": "safety",
+    "criterion": "No fire / no pyro",
+    "target": "\"Ignition\" is light only — no flame, smoke, fuel",
+    "method": "RULES",
+    "acceptance": "Zero combustion source; electrical only, fused",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "S8",
+    "category": "safety",
+    "criterion": "Edges & entanglement",
+    "target": "No exposed sharp edges, no loose costume snag points",
+    "method": "BENCH",
+    "acceptance": "All edges radiused/capped; costume secured",
+    "gate": "Build",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "ST1",
+    "category": "steering",
+    "criterion": "Turns the course",
+    "target": "Negotiate tightest course chicane at speed",
+    "method": "CAD + TRACK",
+    "acceptance": "Turning radius ≤ 6 m; clears chicane without lifting a wheel",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "ST2",
+    "category": "steering",
+    "criterion": "Steering precision",
+    "target": "Minimal slop in the linkage",
+    "method": "BENCH",
+    "acceptance": "Free play < 5° at the steering input",
+    "gate": "Build",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "ST3",
+    "category": "steering",
+    "criterion": "No bump-steer",
+    "target": "Toe stays stable over bumps/jump compression",
+    "method": "CAD + FEA",
+    "acceptance": "Toe change < 1° across suspension/flex travel",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "ST4",
+    "category": "steering",
+    "criterion": "Driver effort",
+    "target": "Steerable one-handed if needed",
+    "method": "TRACK",
+    "acceptance": "Input effort comfortable for full run; no fade in control",
+    "gate": "Pre-race",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "ST5",
+    "category": "steering",
+    "criterion": "Self-centring tendency",
+    "target": "Stable straight-line tracking",
+    "method": "TRACK",
+    "acceptance": "Tracks straight hands-light on the flat-out section",
+    "gate": "Pre-race",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "B1",
+    "category": "braking",
+    "criterion": "Stops the cart",
+    "target": "Decelerate from top speed in a controlled distance",
+    "method": "CALC + TRACK",
+    "acceptance": "Sustained decel ≥ 0.4 g; stop from 40 km/h ≤ 16 m",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "B2",
+    "category": "braking",
+    "criterion": "Driver actuation force",
+    "target": "Within one person's strength",
+    "method": "BENCH",
+    "acceptance": "Full braking at input force ≤ 200 N",
+    "gate": "Build",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "B3",
+    "category": "braking",
+    "criterion": "No fade",
+    "target": "Holds over a full run length",
+    "method": "TRACK",
+    "acceptance": "< 15% decel loss from first to last brake on the run",
+    "gate": "Pre-race",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "B4",
+    "category": "braking",
+    "criterion": "Balanced braking",
+    "target": "No lock-induced spin",
+    "method": "TRACK",
+    "acceptance": "No uncommanded yaw > 5° under hard braking",
+    "gate": "Pre-race",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "B5",
+    "category": "braking",
+    "criterion": "Redundancy / fail-safe",
+    "target": "Brake remains usable if one side degrades",
+    "method": "BENCH",
+    "acceptance": "Cart still stoppable with a single-circuit/half failure",
+    "gate": "Build",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "M1",
+    "category": "mass",
+    "criterion": "Within RB weight limit",
+    "target": "Total race mass under official limit",
+    "method": "CALC + BENCH",
+    "acceptance": "≤ limit − 10% margin; confirmed on a scale",
+    "gate": "Pre-race",
+    "priority": "P1",
+    "rb_dependent": true
+  },
+  {
+    "id": "M2",
+    "category": "mass",
+    "criterion": "Mass budget tracked",
+    "target": "Per-subsystem mass logged vs. allowance",
+    "method": "CAD + CALC",
+    "acceptance": "Rolling total within budget; no subsystem > +15% over allowance",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "M3",
+    "category": "mass",
+    "criterion": "Ballast strategy",
+    "target": "Mass added low and adjustable, not structural",
+    "method": "CAD",
+    "acceptance": "Ballast removable/tunable; mounted at floor only",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "M4",
+    "category": "mass",
+    "criterion": "As-built ≈ as-modelled",
+    "target": "Real mass matches CAD estimate",
+    "method": "BENCH",
+    "acceptance": "Measured total within ±5% of CAD prediction",
+    "gate": "Build",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "C1",
+    "category": "cog",
+    "criterion": "CoG height",
+    "target": "Low despite tall shell",
+    "method": "CAD + BENCH",
+    "acceptance": "CoG height ≤ 0.45 × track width; measured by tilt-table",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "C2",
+    "category": "cog",
+    "criterion": "Rollover threshold",
+    "target": "Won't tip in cornering or on ramp",
+    "method": "CALC + TRACK",
+    "acceptance": "Static rollover threshold > 1.3 × max lateral g seen on course",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "C3",
+    "category": "cog",
+    "criterion": "Fore/aft balance",
+    "target": "Front/rear split good for steer + brake",
+    "method": "CAD + BENCH",
+    "acceptance": "Weight distribution within 45–55% front, per handling target",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "C4",
+    "category": "cog",
+    "criterion": "Jump pitch stability",
+    "target": "Lands nose-slightly-up, not nose-first",
+    "method": "CFD + FEA + TRACK",
+    "acceptance": "Predicted landing attitude within safe pitch band; verified on ramp",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "C5",
+    "category": "cog",
+    "criterion": "Driver+bottle mass low",
+    "target": "Driver, bottle, ballast at floor",
+    "method": "CAD",
+    "acceptance": "Combined occupant CoG at/below axle line",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "A1",
+    "category": "aero",
+    "criterion": "Net lift at speed",
+    "target": "Stays planted, esp. on the jump",
+    "method": "CFD",
+    "acceptance": "Net lift ≤ 0 (neutral-to-slight-down) at top speed",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "A2",
+    "category": "aero",
+    "criterion": "Drag within silhouette",
+    "target": "Reduce drag without losing the heater shape",
+    "method": "CFD",
+    "acceptance": "Drag reduced vs. baseline box shell with no silhouette change that breaks recognisability",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "A3",
+    "category": "aero",
+    "criterion": "Crosswind stability",
+    "target": "Predictable in side gusts",
+    "method": "CFD",
+    "acceptance": "Yaw moment in crosswind within controllable limit",
+    "gate": "Design",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+  {
+    "id": "A4",
+    "category": "aero",
+    "criterion": "Airborne stability",
+    "target": "No flip/lift tendency during jump",
+    "method": "CFD + TRACK",
+    "acceptance": "Pitch/lift behaviour stable through the air on ramp test",
+    "gate": "Pre-race",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "BU1",
+    "category": "buildability",
+    "criterion": "Within budget",
+    "target": "Tools and materials inside ~R9,000",
+    "method": "CALC",
+    "acceptance": "Bill of materials + tools total ≤ R9,000; tracked monthly",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "BU2",
+    "category": "buildability",
+    "criterion": "Solo-buildable",
+    "target": "No step needs >1 person or specialist machine",
+    "method": "CALC + BENCH",
+    "acceptance": "Every operation doable with planned hand/portable tools",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "BU3",
+    "category": "buildability",
+    "criterion": "Accessible materials",
+    "target": "Cheap, locally sourced stock",
+    "method": "CALC",
+    "acceptance": "All materials available from common SA suppliers; no exotic stock",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "BU4",
+    "category": "buildability",
+    "criterion": "On schedule",
+    "target": "Buildable June–Aug 2026",
+    "method": "CALC",
+    "acceptance": "Build plan fits timeline with slack before event date",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": true
+  },
+  {
+    "id": "BU5",
+    "category": "buildability",
+    "criterion": "No banned processes",
+    "target": "No suspension/hydraulics/fancy electronics",
+    "method": "RULES + CAD",
+    "acceptance": "Design uses only \"modern, effective, nothing fancy\" methods",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "BU6",
+    "category": "buildability",
+    "criterion": "Trackside repairable",
+    "target": "Common failures fixable on the day",
+    "method": "BENCH",
+    "acceptance": "Wheels, brakes, steering, glow serviceable with carried tools",
+    "gate": "Pre-race",
+    "priority": "P2",
+    "rb_dependent": false
+  },
+
+  {
+    "id": "SP1",
+    "category": "spectacle",
+    "criterion": "Reads as a heater",
+    "target": "Instantly recognisable as an LPG gas heater",
+    "method": "REHEARSE",
+    "acceptance": "≥ 90% of a cold-audience test names it \"heater\" unprompted",
+    "gate": "Design",
+    "priority": "P1",
+    "rb_dependent": false
+  },
+  {
+    "id": "SP2",
+    "category": "spectacle",
+    "criterion": "Reliable glow",
+    "target": "Driver-triggered, fires every run",
+    "method": "BENCH + REHEARSE",
+    "acceptance": "Glow ignites on trigger in 3/3 rehearsal runs; no missed bar",
+    "gate": "Pre-race",
+    "priority": "P3",
+    "rb_dependent": false
+  },
+  {
+    "id": "SP3",
+    "category": "spectacle",
+    "criterion": "Visible from stands",
+    "target": "Glow + bottle read at distance",
+    "method": "REHEARSE",
+    "acceptance": "Panels clearly visible at ≥ 50 m in daylight",
+    "gate": "Pre-race",
+    "priority": "P3",
+    "rb_dependent": false
+  },
+  {
+    "id": "SP4",
+    "category": "spectacle",
+    "criterion": "Battery endurance",
+    "target": "Glow lasts the whole event window",
+    "method": "CALC + BENCH",
+    "acceptance": "Power source runs glow ≥ 2× the run + staging duration",
+    "gate": "Build",
+    "priority": "P3",
+    "rb_dependent": false
+  },
+  {
+    "id": "SP5",
+    "category": "spectacle",
+    "criterion": "Bar-by-bar ignition",
+    "target": "Panels light one by one, not all at once",
+    "method": "BENCH",
+    "acceptance": "Sequenced light-up works as scripted",
+    "gate": "Build",
+    "priority": "P3",
+    "rb_dependent": false
+  },
+  {
+    "id": "SP6",
+    "category": "spectacle",
+    "criterion": "Clean gag, no banned props",
+    "target": "No smoke, sound props, or thrown items",
+    "method": "RULES + REHEARSE",
+    "acceptance": "30-second start runs with light only; passes RB content rules",
+    "gate": "Pre-race",
+    "priority": "P3",
+    "rb_dependent": false
+  },
+  {
+    "id": "SP7",
+    "category": "spectacle",
+    "criterion": "Branding compliant",
+    "target": "Quiet \"WARM WHEELERS\" nameplate only",
+    "method": "RULES",
+    "acceptance": "No unapproved third-party logos at scrutineering",
+    "gate": "Pre-race",
+    "priority": "P3",
+    "rb_dependent": true
+  }
+]

@@ -76,6 +76,29 @@ create table if not exists settings (
   constraint settings_singleton check (id = 1)
 );
 
+-- Validation criteria matrix: the design-freeze acceptance gate.
+create table if not exists validation_criteria (
+  id text primary key,
+  category text not null check (category in (
+    'safety', 'steering', 'braking', 'mass', 'cog', 'aero', 'buildability', 'spectacle'
+  )),
+  category_order int not null default 0,
+  order_index int not null default 0,
+  criterion text not null,
+  target text not null,
+  method text not null,
+  acceptance text not null,
+  gate text not null check (gate in ('Design', 'Build', 'Pre-race')),
+  priority text not null check (priority in ('P1', 'P2', 'P3')),
+  rb_dependent boolean not null default false,
+  status text not null default 'pending'
+    check (status in ('pending', 'pass', 'partial', 'fail', 'na')),
+  evidence text,
+  owner text,
+  updated_by text,
+  updated_at timestamptz not null default now()
+);
+
 insert into settings (id, event_name)
   values (1, 'Red Bull Soapbox')
   on conflict (id) do nothing;
@@ -87,6 +110,7 @@ alter table decisions enable row level security;
 alter table notes enable row level security;
 alter table milestones enable row level security;
 alter table settings enable row level security;
+alter table validation_criteria enable row level security;
 
 drop policy if exists "public read phases" on phases;
 drop policy if exists "public read days" on days;
@@ -95,6 +119,7 @@ drop policy if exists "public read decisions" on decisions;
 drop policy if exists "public read notes" on notes;
 drop policy if exists "public read milestones" on milestones;
 drop policy if exists "public read settings" on settings;
+drop policy if exists "public read validation_criteria" on validation_criteria;
 
 create policy "public read phases" on phases for select using (true);
 create policy "public read days" on days for select using (true);
@@ -103,6 +128,7 @@ create policy "public read decisions" on decisions for select using (true);
 create policy "public read notes" on notes for select using (true);
 create policy "public read milestones" on milestones for select using (true);
 create policy "public read settings" on settings for select using (true);
+create policy "public read validation_criteria" on validation_criteria for select using (true);
 
 drop policy if exists "auth write phases" on phases;
 drop policy if exists "auth write days" on days;
@@ -111,6 +137,7 @@ drop policy if exists "auth write decisions" on decisions;
 drop policy if exists "auth write notes" on notes;
 drop policy if exists "auth write milestones" on milestones;
 drop policy if exists "auth write settings" on settings;
+drop policy if exists "auth write validation_criteria" on validation_criteria;
 
 create policy "auth write phases" on phases for all
   using (auth.role() = 'authenticated')
@@ -137,6 +164,10 @@ create policy "auth write milestones" on milestones for all
   with check (auth.role() = 'authenticated');
 
 create policy "auth write settings" on settings for all
+  using (auth.role() = 'authenticated')
+  with check (auth.role() = 'authenticated');
+
+create policy "auth write validation_criteria" on validation_criteria for all
   using (auth.role() = 'authenticated')
   with check (auth.role() = 'authenticated');
 

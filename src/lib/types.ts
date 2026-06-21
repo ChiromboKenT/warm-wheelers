@@ -65,6 +65,37 @@ export interface Settings {
   freeze_date: string | null;
 }
 
+export type ValidationCategory =
+  | "safety"
+  | "steering"
+  | "braking"
+  | "mass"
+  | "cog"
+  | "aero"
+  | "buildability"
+  | "spectacle";
+
+export type ValidationStatus = "pending" | "pass" | "partial" | "fail" | "na";
+
+export interface ValidationCriterion {
+  id: string;
+  category: ValidationCategory;
+  category_order: number;
+  order_index: number;
+  criterion: string;
+  target: string;
+  method: string;
+  acceptance: string;
+  gate: "Design" | "Build" | "Pre-race";
+  priority: "P1" | "P2" | "P3";
+  rb_dependent: boolean;
+  status: ValidationStatus;
+  evidence: string | null;
+  owner: string | null;
+  updated_by: string | null;
+  updated_at: string;
+}
+
 export interface Message {
   id: string;
   created_at: string;
