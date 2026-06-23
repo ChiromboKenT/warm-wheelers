@@ -7,6 +7,7 @@ import { Dashboard } from "./routes/cockpit/Dashboard";
 import { TaskTracker } from "./routes/cockpit/TaskTracker";
 import { DecisionsLog } from "./routes/cockpit/DecisionsLog";
 import { Validation } from "./routes/cockpit/Validation";
+import { Prep } from "./routes/cockpit/Prep";
 import { Notes } from "./routes/cockpit/Notes";
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="tasks" element={<TaskTracker />} />
         <Route path="decisions" element={<DecisionsLog />} />
         <Route path="validation" element={<Validation />} />
+        <Route path="prep" element={<Prep />} />
         <Route path="notes" element={<Notes />} />
       </Route>
     </Routes>

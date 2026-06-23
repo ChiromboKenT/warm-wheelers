@@ -104,3 +104,10 @@ export interface Message {
   message: string;
   handled: boolean;
 }
+
+export interface PrepProgress {
+  item_id: string;
+  checked: boolean;
+  updated_by: string | null;
+  updated_at: string;
+}

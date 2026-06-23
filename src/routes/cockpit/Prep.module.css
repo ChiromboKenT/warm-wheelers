@@ -1,0 +1,240 @@
+/* ---- Intro / progress ---- */
+.intro {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--rust);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.introHead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-family: var(--font-display, inherit);
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--rust);
+  border-radius: 999px;
+  padding: 4px 12px;
+}
+
+.introText {
+  flex: 1 1 240px;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.progress {
+  margin-top: 14px;
+}
+
+.progressLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.track {
+  height: 8px;
+  background: var(--cream-soft);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background: var(--grad-flame, var(--ember));
+  transition: width 0.25s ease;
+}
+
+/* ---- Phase divider ---- */
+.phase {
+  font-family: var(--font-display, inherit);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin: 26px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--rust);
+}
+
+/* ---- Section group ---- */
+.group {
+  margin-bottom: 22px;
+}
+
+.groupHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.groupTitle {
+  font-family: var(--font-display, inherit);
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.groupBlurb {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.groupCount {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---- Item ---- */
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.item:hover {
+  border-color: var(--muted);
+}
+
+.itemDone {
+  border-left-color: #2e7d4f;
+  opacity: 0.62;
+}
+
+.itemDone .itemName {
+  text-decoration: line-through;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: var(--rust);
+  cursor: pointer;
+  flex: none;
+}
+
+.body {
+  flex: 1 1 auto;
+}
+
+.itemHead {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.itemId {
+  font-family: var(--font-mono, monospace);
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--blueprint);
+}
+
+.itemName {
+  font-weight: 700;
+  margin-right: auto;
+}
+
+.kind {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.k_material {
+  background: var(--p1-bg);
+  color: var(--p1-fg);
+}
+.k_tool {
+  background: var(--cream);
+  color: var(--brown);
+}
+.k_test {
+  background: var(--p0-bg);
+  color: var(--p0-fg);
+}
+.k_model {
+  background: #e3eef1;
+  color: var(--blueprint);
+}
+.k_input {
+  background: var(--p2-bg);
+  color: var(--p2-fg);
+}
+
+.meta {
+  display: grid;
+  gap: 3px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.meta b {
+  color: var(--ink);
+}
+
+/* ---- Options / alternatives ---- */
+.options {
+  margin: 8px 0 0;
+  padding-left: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  list-style: disc;
+}
+
+.options li {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.refs {
+  margin-top: 8px;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  border-left: 2px solid var(--line);
+  padding-left: 8px;
+}
+
+.error {
+  color: var(--rust);
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.foot {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 6px;
+}

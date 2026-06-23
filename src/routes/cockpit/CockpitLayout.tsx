@@ -31,6 +31,9 @@ export function CockpitLayout() {
           <NavLink to="/build/validation" className={linkClass}>
             Validation
           </NavLink>
+          <NavLink to="/build/prep" className={linkClass}>
+            Prep
+          </NavLink>
           <NavLink to="/build/notes" className={linkClass}>
             Notes
           </NavLink>
