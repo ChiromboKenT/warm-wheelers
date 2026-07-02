@@ -60,9 +60,3 @@
 .stream3 {
   animation-duration: 9s;
 }
-
-/* wind vane spins slowly */
-.vane {
-  transform-box: fill-box;
-  animation: ww-spin 3.8s linear infinite;
-}

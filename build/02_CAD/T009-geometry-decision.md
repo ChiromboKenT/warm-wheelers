@@ -1,7 +1,14 @@
 # T009 — Concept Geometry Decision (ADR-003)
 
+> ## ⛔ SUPERSEDED concept geometry — kept as the decision record only
+> ADR-003 was the *first* geometry proposal (wheelbase 1800, track 1300, clearance 220, width 2000, height
+> 1500). It has since been **refined and locked in the [T018 master spec](T018-CAD-master-design-spec.md)**:
+> wheelbase **1700**, track **1200** (capped), clearance **150**, shell width **1300** (`overall` ~1395 over
+> the duals), height **1450**, wheel **260 mm**. The T009 **rationale** (compact heater, low CoG, anti-tip
+> margin, the fallbacks) still explains *why* — but for any modelling use **[T018-parameters.csv](T018-parameters.csv)**.
+
 **Warm Wheelers · Red Bull Soapbox JHB 2026 · Concept Geometry**
-Date: 2026-06-22 · Status: PROPOSED v0 (awaiting builder sign-off)
+Date: 2026-06-22 · Status: **SUPERSEDED by T018** (retained as ADR rationale)
 Drawing: [T009-layout-sketch-v0.png](T009-layout-sketch-v0.png) · source: [T009-layout-sketch-v0.svg](T009-layout-sketch-v0.svg)
 Depends on: T007 reference dims · T008 driver envelope
 Relates to: [Validation criteria matrix](../../docs/plans/2026-06-21-warm-wheelers-validation-criteria-matrix.md) · [Decision log](../../docs/plans/2026-06-21-warm-wheelers-decision-log.md)

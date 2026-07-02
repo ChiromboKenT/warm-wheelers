@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Warm Wheelers design preview — the finished cart rendered in real time at true T018 geometry." />
+<meta name="theme-color" content="#16100a" />
+<title>Warm Wheelers · Design preview</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231a120b'/%3E%3Crect x='9' y='8' width='5' height='4' rx='1' fill='%23ff8c1a'/%3E%3Crect x='9' y='14' width='5' height='4' rx='1' fill='%23ff6b1a'/%3E%3Crect x='9' y='20' width='5' height='4' rx='1' fill='%23c8431c'/%3E%3Ccircle cx='22' cy='23' r='4' fill='none' stroke='%23efd9b0' stroke-width='2'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:opsz,wght@10..72,400..900&family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --coal:#16100a;      /* page ground — burnt hearth */
+    --soot:#231a11;      /* raised panels */
+    --seam:#3a2d1e;      /* hairline seams */
+    --flame:#ff8c1a;     /* the glow */
+    --ember:#c8431c;     /* deep orange */
+    --bone:#efd9b0;      /* cream text */
+    --ash:#98876c;       /* muted captions */
+  }
+  *{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  body{
+    background:var(--coal); color:var(--bone);
+    font-family:"Fraunces", Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:var(--flame); text-decoration:none; }
+  ::selection{ background:var(--ember); color:var(--bone); }
+  button:focus-visible{ outline:2px solid var(--flame); outline-offset:3px; }
+
+  /* ---------- header ---------- */
+  header{ padding:clamp(20px,3.5vw,44px) clamp(18px,4vw,56px) 14px; }
+  .eyebrow{
+    font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.22em;
+    color:var(--ash); text-transform:uppercase; display:flex; gap:14px; flex-wrap:wrap; align-items:center;
+  }
+  .eyebrow .dot{ width:6px; height:6px; border-radius:50%; background:var(--flame); flex:none; }
+  h1{
+    font-family:"Big Shoulders Display",sans-serif; font-weight:800;
+    font-size:clamp(46px,7.5vw,92px); line-height:.95; letter-spacing:.01em;
+    color:var(--bone); margin-top:10px; text-transform:uppercase;
+  }
+  h1 .flame{ color:var(--flame); }
+  .dek{
+    max-width:62ch; margin-top:12px; font-size:clamp(15px,1.5vw,18px);
+    font-style:italic; color:#cbb58e; line-height:1.55;
+  }
+  .dek b{ color:var(--bone); font-style:normal; font-weight:600; }
+
+  /* ---------- stage ---------- */
+  .stage{
+    position:relative; margin:18px clamp(12px,2.5vw,36px) 0;
+    height:min(76vh,820px); min-height:420px;
+    border:1px solid var(--seam); border-radius:14px; overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 20%, #1d150c 0%, #120d08 70%);
+  }
+  .stage canvas{ display:block; width:100%; height:100%; }
+  .hint{
+    position:absolute; top:14px; right:16px; font-family:"Space Mono",monospace;
+    font-size:10.5px; letter-spacing:.14em; color:var(--ash); text-transform:uppercase;
+    pointer-events:none;
+  }
+  .hud{
+    position:absolute; left:0; right:0; bottom:0;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:16px;
+    padding:14px 16px 16px; pointer-events:none; flex-wrap:wrap;
+  }
+  .hud > *{ pointer-events:auto; }
+  .views{ display:flex; gap:8px; flex-wrap:wrap; }
+  .views button{
+    font-family:"Space Mono",monospace; font-size:11px; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--ash); background:rgba(22,16,10,.78);
+    border:1px solid var(--seam); border-radius:999px; padding:8px 14px; cursor:pointer;
+    transition:color .18s, border-color .18s;
+  }
+  .views button:hover{ color:var(--bone); }
+  .views button[aria-pressed="true"]{ color:var(--coal); background:var(--bone); border-color:var(--bone); }
+
+  /* the glow lever — the one loud element on the page */
+  .ignition{
+    background:rgba(22,16,10,.82); border:1px solid var(--seam); border-radius:12px;
+    padding:12px 14px; min-width:238px; backdrop-filter:blur(4px);
+  }
+  .ignition .label{
+    font-family:"Space Mono",monospace; font-size:10.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ash); display:flex; justify-content:space-between; gap:12px;
+  }
+  .ignition .label em{ font-style:normal; color:var(--flame); }
+  .detents{ display:flex; gap:6px; margin-top:9px; }
+  .detents button{
+    flex:1; font-family:"Space Mono",monospace; font-size:12px; padding:9px 0;
+    background:#1b130c; color:var(--ash); border:1px solid var(--seam); border-radius:7px; cursor:pointer;
+    transition:background .18s,color .18s,border-color .18s;
+  }
+  .detents button[aria-pressed="true"]{ background:var(--flame); border-color:var(--flame); color:#2a1200; font-weight:700; }
+  .detents button.passed{ background:#4a2408; border-color:#5c2d09; color:#f0b477; }
+  .ignition .note{
+    margin-top:9px; font-family:"Space Mono",monospace; font-size:10px; line-height:1.5;
+    color:var(--ash); letter-spacing:.03em;
+  }
+
+  /* ---------- scrutineering card ---------- */
+  section{ padding:clamp(30px,4.5vw,64px) clamp(18px,4vw,56px); }
+  .sec-head{
+    display:flex; align-items:baseline; gap:16px; border-bottom:1px solid var(--seam);
+    padding-bottom:12px; margin-bottom:0;
+  }
+  .sec-head h2{
+    font-family:"Big Shoulders Display",sans-serif; font-weight:700; font-size:clamp(24px,3vw,34px);
+    letter-spacing:.04em; text-transform:uppercase; color:var(--bone);
+  }
+  .sec-head span{ font-family:"Space Mono",monospace; font-size:11px; color:var(--ash); letter-spacing:.14em; }
+  .specs{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .spec{
+    padding:20px 18px 22px; border-bottom:1px solid var(--seam); border-right:1px solid var(--seam);
+  }
+  .spec:nth-child(4n){ border-right:none; }
+  .spec .k{
+    font-family:"Space Mono",monospace; font-size:10.5px; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ash);
+  }
+  .spec .v{
+    font-family:"Big Shoulders Display",sans-serif; font-weight:700; font-size:clamp(22px,2.4vw,30px);
+    color:var(--bone); margin-top:6px; letter-spacing:.02em;
+  }
+  .spec .r{ font-size:13.5px; color:#b39a72; margin-top:6px; line-height:1.5; }
+  .spec .r i{ color:var(--flame); font-style:normal; }
+
+  /* ---------- notes ---------- */
+  .notes{ display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(20px,3vw,44px); }
+  .note-col h3{
+    font-family:"Big Shoulders Display",sans-serif; font-weight:700; font-size:21px;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--flame); margin-bottom:10px;
+  }
+  .note-col p{ font-size:15.5px; line-height:1.7; color:#d5c09a; }
+  .note-col p b{ color:var(--bone); font-weight:600; }
+
+  footer{
+    padding:22px clamp(18px,4vw,56px) 40px; border-top:1px solid var(--seam);
+    font-family:"Space Mono",monospace; font-size:11px; color:var(--ash); line-height:1.8; letter-spacing:.04em;
+  }
+  .fallback{
+    position:absolute; inset:0; display:none; place-items:center; text-align:center;
+    padding:30px; font-size:15px; color:var(--ash);
+  }
+
+  @media (max-width:920px){
+    .specs{ grid-template-columns:repeat(2,1fr); }
+    .spec:nth-child(4n){ border-right:1px solid var(--seam); }
+    .spec:nth-child(2n){ border-right:none; }
+    .notes{ grid-template-columns:1fr; }
+    .stage{ height:64vh; }
+  }
+  @media (prefers-reduced-motion:reduce){ html{ scroll-behavior:auto; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">
+    <span class="dot"></span>
+    <span>Red Bull Box Cart Race · Johannesburg 2026</span>
+    <span>Design preview · T026</span>
+  </div>
+  <h1>Warm <span class="flame">Wheelers</span></h1>
+  <p class="dek">
+    A domestic gas heater, re-plumbed for gravity. This is the cart as frozen in the CAD master
+    spec — rendered at <b>true dimensions</b>, down to the 25&thinsp;mm gap between the rear duals.
+    Pull the lever to ignite it.
+  </p>
+</header>
+
+<div class="stage" id="stage">
+  <div class="hint">drag to orbit · scroll to zoom</div>
+  <div class="fallback" id="fallback"><p>This preview needs WebGL. Open it in a current browser to see the cart.</p></div>
+  <div class="hud">
+    <div class="views" role="group" aria-label="Camera views">
+      <button data-view="hero"   aria-pressed="true">¾ Front</button>
+      <button data-view="side"   aria-pressed="false">Profile</button>
+      <button data-view="rear"   aria-pressed="false">¾ Rear</button>
+      <button data-view="face"   aria-pressed="false">Grille</button>
+    </div>
+    <div class="ignition">
+      <div class="label"><span>Ignition — driver lever</span><em id="stageReadout">COLD</em></div>
+      <div class="detents" role="group" aria-label="Glow stage">
+        <button data-stage="0" aria-pressed="true">OFF</button>
+        <button data-stage="1" aria-pressed="false">I</button>
+        <button data-stage="2" aria-pressed="false">II</button>
+        <button data-stage="3" aria-pressed="false">III</button>
+      </div>
+      <div class="note">Three sprung panels, one ratchet click each. No battery — stored electrical energy is banned, so this is rod and spring.</div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="sec-head"><h2>Scrutineering card</h2><span>values from the 2026-07-02 validation pass</span></div>
+  <div class="specs">
+    <div class="spec"><div class="k">Envelope</div><div class="v">2&thinsp;550 × 1&thinsp;395 × 1&thinsp;600</div><div class="r">mm, over the duals. Limit 6&thinsp;000 × 2&thinsp;000 × 2&thinsp;500 — clears width by 605&thinsp;mm <i>✓</i></div></div>
+    <div class="spec"><div class="k">Mass budget</div><div class="v">76.4 kg</div><div class="r">Cap 80&thinsp;kg excluding driver — 3.6&thinsp;kg in hand, no ballast <i>✓</i></div></div>
+    <div class="spec"><div class="k">Wheels</div><div class="v">6 × Ø260</div><div class="r">Rybro pneumatics: steered pair up front, load-sharing duals at the rear <i>✓</i></div></div>
+    <div class="spec"><div class="k">Brakes</div><div class="v">2 × rear disc</div><div class="r">Independent circuits, hand levers. 40→0&thinsp;km/h in 15.7&thinsp;m <i>✓</i></div></div>
+    <div class="spec"><div class="k">Steering</div><div class="v">Pitman + beam axle</div><div class="r">Ackermann geometry, braced column. Turning radius 3.5&thinsp;m <i>✓</i></div></div>
+    <div class="spec"><div class="k">Stability</div><div class="v">CoG ≈ 340 mm</div><div class="r">Driver-dominated and low. Rollover threshold ≈ 1.8&thinsp;g lateral <i>✓</i></div></div>
+    <div class="spec"><div class="k">Ignition</div><div class="v">Lever + ratchet</div><div class="r">Three fluorescent panels flip in sequence — obviously fake fire, per the rules <i>✓</i></div></div>
+    <div class="spec"><div class="k">Clearance</div><div class="v">150 mm</div><div class="r">180&thinsp;mm at the nose, so the start-ramp lip can’t bite <i>✓</i></div></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Why it looks like this</h2><span>form and function, one shape</span></div>
+  <div class="notes" style="margin-top:26px">
+    <div class="note-col">
+      <h3>The read</h3>
+      <p>Nine out of ten strangers have to name it <b>“heater”</b> in a second. That job is carried by
+      the recessed three-bar grille, the two control knobs, the nameplate and the tall, slightly
+      leaning stance — not by paint. The look is a Goal-1 promise, so it wins ties against aero.</p>
+    </div>
+    <div class="note-col">
+      <h3>The air</h3>
+      <p>The nose bows <b>200&thinsp;mm</b> so the flat face never slams the wind, and the tail draws down to a
+      <b>Ø700 pod</b> so the wake stays small. The driver reclines feet-forward with eyes 670&thinsp;mm below the
+      roofline — the orange bottle on the back of the heater. The driver is the fuel.</p>
+    </div>
+    <div class="note-col">
+      <h3>The rules</h3>
+      <p>Gravity and a push, nothing stored. Steel spine, shutterply deck, <b>welded roll hoop</b> over the
+      helmet line, harness always. Every number on this page passed the envelope, mass and rollover
+      checks before anything gets cut.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Geometry: T018 master spec · shell T023 · glow mechanism T024 · driver package T025 — <span style="color:#cbb58e">build/02_CAD</span><br />
+  Real-time physically-based render · every dimension driven by T018-parameters.csv
+</footer>
+
+<script type="importmap">
+{ "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+/* ============================================================
+   Coordinates. Spec (T018): +X forward, +Y left, +Z up, mm.
+   World: x = specX, y = specZ (up), z = -specY. Root scaled to metres.
+   ============================================================ */
+const P = {                       // T018-parameters.csv
+  wheelbase: 1700, track: 1200, wheelDia: 260, wheelW: 85,
+  bodyW: 1300, bodyH: 1450, bodyLen: 1850, boattail: 500,
+  domeDepth: 200, clearance: 150, axleZ: 130,
+  frontX: 1200,                   // body_front_x datum
+  rakeShear: -127 / 1450          // 5° lean, top rearward
+};
+const HALF_W = P.bodyW / 2;       // 650
+const REAR_X = P.frontX - P.bodyLen;   // -650
+const TAIL_END = REAR_X - P.boattail;  // -1150
+
+const stageEl = document.getElementById('stage');
+let renderer;
+try {
+  renderer = new THREE.WebGLRenderer({ antialias: true });
+} catch (e) {
+  document.getElementById('fallback').style.display = 'grid';
+  throw e;
+}
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.12;
+stageEl.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x120d08);
+scene.fog = new THREE.Fog(0x120d08, 9, 20);
+
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
+const camera = new THREE.PerspectiveCamera(30, 2, 0.1, 60);
+const TARGET = new THREE.Vector3(0.10, 0.62, 0);
+const VIEWS = {
+  hero: new THREE.Vector3( 3.05, 1.35,  2.45),
+  side: new THREE.Vector3( 0.10, 0.80,  4.45),
+  rear: new THREE.Vector3(-2.95, 1.55,  2.40),
+  face: new THREE.Vector3( 4.35, 0.72,  0.95)
+};
+camera.position.copy(VIEWS.hero);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.copy(TARGET);
+controls.enableDamping = true;
+controls.dampingFactor = 0.06;
+controls.minDistance = 1.7; controls.maxDistance = 9;
+controls.maxPolarAngle = 1.52;
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+controls.autoRotate = !reduceMotion;
+controls.autoRotateSpeed = 0.5;
+renderer.domElement.addEventListener('pointerdown', () => { controls.autoRotate = false; }, { once: true });
+
+/* ---------- lights ---------- */
+const key = new THREE.DirectionalLight(0xfff0dd, 3.1);
+key.position.set(3.6, 4.4, 2.3);
+key.castShadow = true;
+key.shadow.mapSize.set(2048, 2048);
+key.shadow.camera.left = -2.8; key.shadow.camera.right = 2.8;
+key.shadow.camera.top = 2.8;   key.shadow.camera.bottom = -2.8;
+key.shadow.camera.near = 0.5;  key.shadow.camera.far = 12;
+key.shadow.bias = -0.0002; key.shadow.normalBias = 0.02; key.shadow.radius = 3;
+scene.add(key, key.target);
+
+const fill = new THREE.DirectionalLight(0xb8c4d8, 0.65);
+fill.position.set(-4.5, 2.6, -3.2);
+scene.add(fill);
+scene.add(new THREE.HemisphereLight(0x453723, 0x0b0806, 0.5));
+
+// light of the glow itself — spills onto the tarmac when the lever is pulled
+const glowLight = new THREE.PointLight(0xff7a1a, 0, 2.4, 2);
+glowLight.position.set(1.36, 0.48, 0);
+scene.add(glowLight);
+
+/* ---------- materials ---------- */
+const env = (m, i) => { m.envMapIntensity = i; return m; };
+const MAT = {
+  body:  env(new THREE.MeshPhysicalMaterial({ color: 0x2a211a, roughness: 0.52, clearcoat: 0.28, clearcoatRoughness: 0.5 }), 0.5),
+  slat:  env(new THREE.MeshStandardMaterial({ color: 0x171310, roughness: 0.6 }), 0.4),
+  cavity:env(new THREE.MeshStandardMaterial({ color: 0x0c0906, roughness: 0.95 }), 0.15),
+  tyre:  env(new THREE.MeshStandardMaterial({ color: 0x141414, roughness: 0.92 }), 0.25),
+  rim:   env(new THREE.MeshStandardMaterial({ color: 0xb2ada2, metalness: 0.65, roughness: 0.45 }), 0.9),
+  hub:   env(new THREE.MeshStandardMaterial({ color: 0x2c2723, metalness: 0.4, roughness: 0.6 }), 0.5),
+  steel: env(new THREE.MeshStandardMaterial({ color: 0x3d3d42, metalness: 0.85, roughness: 0.45 }), 0.8),
+  disc:  env(new THREE.MeshStandardMaterial({ color: 0x8f8f94, metalness: 0.9, roughness: 0.35 }), 1.0),
+  ply:   env(new THREE.MeshStandardMaterial({ color: 0xc39a5e, roughness: 0.85 }), 0.3),
+  orange:env(new THREE.MeshPhysicalMaterial({ color: 0xd9541a, roughness: 0.48, clearcoat: 0.3, clearcoatRoughness: 0.45 }), 0.55),
+  suit:  env(new THREE.MeshStandardMaterial({ color: 0xe8631f, roughness: 0.62 }), 0.45),
+  bone:  env(new THREE.MeshStandardMaterial({ color: 0xefd9b0, roughness: 0.5 }), 0.5),
+  visor: env(new THREE.MeshPhysicalMaterial({ color: 0x191511, roughness: 0.15, metalness: 0.2, clearcoat: 1 }), 1.2),
+  seat:  env(new THREE.MeshStandardMaterial({ color: 0x1c1712, roughness: 0.9 }), 0.2)
+};
+
+/* root group: build in spec-mm, scale once to metres */
+const root = new THREE.Group();
+root.scale.setScalar(0.001);
+scene.add(root);
+const mesh = (geo, mat, parent = root) => {
+  const m = new THREE.Mesh(geo, mat);
+  m.castShadow = true; m.receiveShadow = true;
+  parent.add(m); return m;
+};
+
+/* ---------- ground ---------- */
+const ground = new THREE.Mesh(
+  new THREE.CircleGeometry(9000, 64),
+  env(new THREE.MeshStandardMaterial({ color: 0x191310, roughness: 0.96 }), 0.12)
+);
+ground.rotation.x = -Math.PI / 2;
+ground.receiveShadow = true;
+root.add(ground);
+
+/* ============================================================
+   SHELL — sheared 5° (rake) about Z = 150 (T018 §3, T023)
+   ============================================================ */
+const shell = new THREE.Group();
+shell.matrixAutoUpdate = false;
+{ // x' = x + k·(y − 150)  … lean the whole shell back, base fixed
+  const k = P.rakeShear;
+  shell.matrix.set(1, k, 0, -150 * k,  0, 1, 0, 0,  0, 0, 1, 0,  0, 0, 0, 1);
+}
+root.add(shell);
+
+/* footprint helpers — plan view in (specX, specY) */
+const frontXAt = y => P.frontX + P.domeDepth * Math.sqrt(Math.max(0, 1 - (y / HALF_W) ** 2));
+function frontArc(shape, y0, y1, n = 40) {
+  for (let i = 1; i <= n; i++) {
+    const y = y0 + (y1 - y0) * i / n;
+    shape.lineTo(frontXAt(y), y);
+  }
+}
+const CHORD = 1284;      // recessed flat grille face
+const RY = 520;          // recess half-width
+function footprint({ notch = false, recess = false } = {}) {
+  const s = new THREE.Shape(); const r = 45;
+  s.moveTo(REAR_X + r, -HALF_W);
+  if (notch) { s.lineTo(650, -HALF_W); s.lineTo(650, -460); s.lineTo(1050, -460); s.lineTo(1050, -HALF_W); }
+  s.lineTo(P.frontX, -HALF_W);
+  if (recess) {
+    frontArc(s, -HALF_W, -RY, 14);
+    s.lineTo(CHORD, -RY); s.lineTo(CHORD, RY);
+    s.lineTo(frontXAt(RY), RY);
+    frontArc(s, RY, HALF_W, 14);
+  } else {
+    frontArc(s, -HALF_W, HALF_W, 56);
+  }
+  s.lineTo(REAR_X + r, HALF_W);
+  s.quadraticCurveTo(REAR_X, HALF_W, REAR_X, HALF_W - r);
+  s.lineTo(REAR_X, -HALF_W + r);
+  s.quadraticCurveTo(REAR_X, -HALF_W, REAR_X + r, -HALF_W);
+  return s;
+}
+function band(shape, z0, h, mat = MAT.body) {
+  const g = new THREE.ExtrudeGeometry(shape, { depth: h, bevelEnabled: false, steps: 1 });
+  g.translate(0, 0, z0);
+  g.rotateX(-Math.PI / 2);       // (X, Y, Z) → (X, Z, −Y)
+  return mesh(g, mat, shell);
+}
+band(footprint({ notch: true }), 150, 150);        // skirt + front wheel arches
+band(footprint({ recess: true }), 300, 350);       // glow grille zone (Z 300–650)
+band(footprint(), 650, 60);                        // mid rail
+band(footprint({ recess: true }), 710, 350);       // driver view band (dark mesh)
+band(footprint(), 1060, 540);                      // upper body
+
+/* cavity backdrops inside the two recesses */
+const cavity = (z0, z1) => {
+  const g = new THREE.BoxGeometry(6, z1 - z0, 2 * 512);
+  g.translate(1288, (z0 + z1) / 2, 0);
+  return mesh(g, MAT.cavity, shell);
+};
+cavity(306, 644);
+cavity(716, 1054);
+
+/* grille slats — straight bars across each recess */
+function slat(zc, h) {
+  const g = new THREE.BoxGeometry(14, h, 2 * 519);
+  g.translate(1329, zc, 0);
+  mesh(g, MAT.slat, shell);
+}
+slat(413.5, 24); slat(535.5, 24);                          // between glow panels
+[730, 805, 880, 955, 1030].forEach(z => slat(z, 22));      // view-band mesh bars
+
+/* glow panels — piano-hinged at the top edge (T024) */
+const panels = [];
+function glowPanel(zTop) {
+  const grp = new THREE.Group();
+  grp.position.set(1299, zTop, 0);
+  const mat = env(new THREE.MeshStandardMaterial({
+    color: 0x191310, roughness: 0.55,
+    emissive: 0xff6400, emissiveIntensity: 0
+  }), 0.3);
+  const g = new THREE.BoxGeometry(10, 95, 2 * 505);
+  g.translate(0, -47.5, 0);                  // hang from the hinge
+  const m = new THREE.Mesh(g, mat);
+  m.castShadow = m.receiveShadow = true;
+  grp.add(m);
+  shell.add(grp);
+  panels.push({ grp, mat, v: 0, target: 0 });
+}
+glowPanel(644); glowPanel(522); glowPanel(400);   // panel 1 (top) lights first
+
+/* knobs + nameplate on the skirt dome (T023 §3.4) */
+function surfaceNormal(y) {
+  const x = frontXAt(y) - P.frontX;
+  const n = new THREE.Vector3(x / (P.domeDepth ** 2), 0, y / (HALF_W ** 2)); // spec-plane gradient
+  const w = new THREE.Vector3(n.x, 0, -n.z).normalize();                     // world
+  return w;
+}
+function knob(ySpec, zSpec) {
+  const n = surfaceNormal(ySpec);
+  const grp = new THREE.Group();
+  grp.position.set(frontXAt(ySpec), zSpec, -ySpec);
+  grp.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), n);
+  const base = new THREE.Mesh(new THREE.CylinderGeometry(26, 26, 16, 24), MAT.slat);
+  base.position.y = 6;
+  const cap = new THREE.Mesh(new THREE.CylinderGeometry(20, 22, 18, 24), MAT.bone);
+  cap.position.y = 20;
+  const pip = new THREE.Mesh(new THREE.BoxGeometry(6, 6, 16), MAT.slat);
+  pip.position.set(0, 29, 6);
+  [base, cap, pip].forEach(m => { m.castShadow = m.receiveShadow = true; grp.add(m); });
+  shell.add(grp);
+}
+knob(-255, 232); knob(-345, 232);
+
+function nameplate() {
+  const c = document.createElement('canvas'); c.width = 512; c.height = 148;
+  const draw = () => {
+    const g = c.getContext('2d');
+    g.fillStyle = '#f2e3c0'; g.fillRect(0, 0, 512, 148);
+    g.strokeStyle = '#221910'; g.lineWidth = 10; g.strokeRect(9, 9, 494, 130);
+    g.fillStyle = '#221910'; g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.font = '700 64px "Big Shoulders Display", "Arial Narrow", sans-serif';
+    g.fillText('WARM WHEELERS', 256, 78, 460);
+    tex.needsUpdate = true;
+  };
+  const tex = new THREE.CanvasTexture(c);
+  tex.anisotropy = 8; tex.colorSpace = THREE.SRGBColorSpace;
+  draw(); document.fonts.ready.then(draw);
+  const mats = Array(6).fill(MAT.slat);
+  mats[0] = env(new THREE.MeshStandardMaterial({ map: tex, roughness: 0.45 }), 0.5);
+  const ySpec = 300, n = surfaceNormal(ySpec);
+  const m = new THREE.Mesh(new THREE.BoxGeometry(10, 68, 240), mats);
+  m.position.set(frontXAt(ySpec) + 2, 228, -ySpec);
+  m.rotation.y = -Math.atan2(n.z, n.x);
+  m.castShadow = m.receiveShadow = true;
+  shell.add(m);
+}
+nameplate();
+
+/* ---------- boat-tail: open trough, rect → Ø700 pod (T023 §3.3) ---------- */
+const smooth = t => t * t * (3 - 2 * t);
+const lerp = (a, b, t) => a + (b - a) * t;
+function tailGeometry() {
+  const NU = 40, NS = 72, pos = [], idx = [];
+  for (let iu = 0; iu <= NU; iu++) {
+    const u = iu / NU, s = smooth(u);
+    const X = REAR_X - P.boattail * u;
+    const a = lerp(HALF_W, 350, s), b = lerp(650, 350, s), c = lerp(950, 650, s);
+    const n = lerp(5, 2, s);
+    const t0 = lerp(0.21, 0.785, s);           // rim cut angle from top
+    for (let is = 0; is <= NS; is++) {
+      const t = t0 + (2 * Math.PI - 2 * t0) * is / NS;
+      const sy = Math.sin(t), cz = Math.cos(t);
+      const y = a * Math.sign(sy) * Math.abs(sy) ** (2 / n);
+      const z = c + b * Math.sign(cz) * Math.abs(cz) ** (2 / n);
+      pos.push(X, z, -y);
+    }
+  }
+  for (let iu = 0; iu < NU; iu++) for (let is = 0; is < NS; is++) {
+    const a0 = iu * (NS + 1) + is, b0 = a0 + NS + 1;
+    idx.push(a0, b0, a0 + 1, b0, b0 + 1, a0 + 1);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  g.setIndex(idx); g.computeVertexNormals();
+  return g;
+}
+{
+  const tailMat = MAT.body.clone(); tailMat.side = THREE.DoubleSide;
+  const tail = mesh(tailGeometry(), tailMat, shell);
+  tail.castShadow = true;
+
+  // rim beading over the raw edge
+  const rimPts = side => {
+    const pts = [];
+    for (let iu = 0; iu <= 40; iu++) {
+      const u = iu / 40, s = smooth(u);
+      const a = lerp(HALF_W, 350, s), b = lerp(650, 350, s), c = lerp(950, 650, s);
+      const n = lerp(5, 2, s), t0 = lerp(0.21, 0.785, s);
+      const y = a * Math.abs(Math.sin(t0)) ** (2 / n) * side;
+      const z = c + b * Math.abs(Math.cos(t0)) ** (2 / n);
+      pts.push(new THREE.Vector3(REAR_X - P.boattail * u, z, -y));
+    }
+    return pts;
+  };
+  [1, -1].forEach(side => {
+    const curve = new THREE.CatmullRomCurve3(rimPts(side));
+    mesh(new THREE.TubeGeometry(curve, 60, 12, 10), MAT.body, shell);
+  });
+
+  // pod end: orange bottle base + steel ring
+  const cap = new THREE.Mesh(new THREE.CircleGeometry(342, 48), MAT.orange);
+  cap.position.set(TAIL_END + 3, 650, 0);
+  cap.rotation.y = -Math.PI / 2;
+  cap.castShadow = cap.receiveShadow = true;
+  shell.add(cap);
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(348, 13, 12, 48), MAT.steel);
+  ring.position.set(TAIL_END + 6, 650, 0);
+  ring.rotation.y = Math.PI / 2;
+  ring.castShadow = true;
+  shell.add(ring);
+}
+
+/* ============================================================
+   RUNNING GEAR — not sheared (wheels stay vertical)
+   ============================================================ */
+function wheel(x, ySpec) {
+  const grp = new THREE.Group();
+  grp.position.set(x, P.axleZ, -ySpec);
+  const R = P.wheelDia / 2;
+  const tyre = new THREE.Mesh(new THREE.TorusGeometry(R - 31, 31, 22, 40), MAT.tyre);
+  tyre.scale.z = P.wheelW / 62;
+  const rim = new THREE.Mesh(new THREE.CylinderGeometry(R - 56, R - 56, P.wheelW * 0.68, 28), MAT.rim);
+  rim.rotation.x = Math.PI / 2;
+  const hub = new THREE.Mesh(new THREE.CylinderGeometry(26, 26, P.wheelW * 0.78, 20), MAT.hub);
+  hub.rotation.x = Math.PI / 2;
+  [tyre, rim, hub].forEach(m => { m.castShadow = m.receiveShadow = true; grp.add(m); });
+  root.add(grp);
+}
+wheel( P.wheelbase / 2,  600); wheel( P.wheelbase / 2, -600);     // steered front pair
+wheel(-P.wheelbase / 2,  545); wheel(-P.wheelbase / 2,  655);     // rear duals, 25 mm gap
+wheel(-P.wheelbase / 2, -545); wheel(-P.wheelbase / 2, -655);
+
+/* axles, steering, brakes — visible in the 150 mm gap and the arches */
+function tube(x, z, halfSpan, r) {
+  const g = new THREE.CylinderGeometry(r, r, halfSpan * 2, 16);
+  g.rotateX(Math.PI / 2);
+  g.translate(x, z, 0);
+  return mesh(g, MAT.steel);
+}
+tube( P.wheelbase / 2, P.axleZ, 580, 17);        // front beam axle
+tube( P.wheelbase / 2 - 80, 96, 555, 8);         // tie rod
+tube(-P.wheelbase / 2, P.axleZ, 690, 15);        // rear axle
+[470, -470].forEach(y => {                       // brake discs + calipers
+  const d = new THREE.Mesh(new THREE.CylinderGeometry(90, 90, 8, 32), MAT.disc);
+  d.rotation.x = Math.PI / 2;
+  d.position.set(-P.wheelbase / 2, P.axleZ, -y);
+  d.castShadow = true; root.add(d);
+  const c = new THREE.Mesh(new THREE.BoxGeometry(60, 52, 30), MAT.slat);
+  c.position.set(-P.wheelbase / 2 + 40, P.axleZ + 55, -y);
+  c.castShadow = true; root.add(c);
+});
+[600, -600].forEach(y => {                       // kingpin uprights
+  const k = new THREE.Mesh(new THREE.CylinderGeometry(13, 13, 110, 12), MAT.steel);
+  k.position.set(P.wheelbase / 2, P.axleZ + 20, -y * 0.97);
+  k.castShadow = true; root.add(k);
+});
+
+/* chassis hints under the floor: spine rails + ply deck edge */
+[180, -180].forEach(y => {
+  const r = new THREE.Mesh(new THREE.BoxGeometry(2050, 40, 40), MAT.steel);
+  r.position.set(25, 172, -y);
+  r.castShadow = true; root.add(r);
+});
+{
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(1900, 16, 1080), MAT.ply);
+  deck.position.set(50, 204, 0);
+  deck.castShadow = deck.receiveShadow = true; root.add(deck);
+}
+
+/* ============================================================
+   COCKPIT — roll hoop, seat, driver-as-bottle (T020/T025)
+   ============================================================ */
+{
+  const hoopX = -825;
+  const hoop = new THREE.Mesh(new THREE.TorusGeometry(325, 17, 12, 40, Math.PI), MAT.steel);
+  hoop.position.set(hoopX, 825, 0);
+  hoop.rotation.y = Math.PI / 2;
+  hoop.castShadow = true; root.add(hoop);
+  [325, -325].forEach(y => {
+    const leg = new THREE.Mesh(new THREE.CylinderGeometry(17, 17, 505, 12), MAT.steel);
+    leg.position.set(hoopX, 572, -y);
+    leg.castShadow = true; root.add(leg);
+  });
+  [[280, 120], [-280, -120]].forEach(([y0, y1]) => {   // rear braces to the pod floor
+    const a = new THREE.Vector3(hoopX, 900, -y0), b = new THREE.Vector3(-1080, 340, -y1);
+    const mid = a.clone().add(b).multiplyScalar(0.5);
+    const len = a.distanceTo(b);
+    const brace = new THREE.Mesh(new THREE.CylinderGeometry(11, 11, len, 10), MAT.steel);
+    brace.position.copy(mid);
+    brace.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize());
+    brace.castShadow = true; root.add(brace);
+  });
+
+  // cockpit floor + seat tub
+  const floor = new THREE.Mesh(new THREE.BoxGeometry(520, 14, 520), MAT.ply);
+  floor.position.set(-580, 309, 0);
+  floor.receiveShadow = true; root.add(floor);
+  const seat = new THREE.Mesh(new THREE.BoxGeometry(380, 250, 420), MAT.seat);
+  seat.position.set(-680, 442, 0);
+  seat.castShadow = seat.receiveShadow = true; root.add(seat);
+
+  // the driver IS the fuel: orange bottle torso, valve-cap helmet
+  const torso = new THREE.Mesh(new THREE.CapsuleGeometry(190, 300, 8, 24), MAT.suit);
+  torso.position.set(-600, 640, 0);
+  torso.rotation.z = 0.42;
+  torso.castShadow = torso.receiveShadow = true; root.add(torso);
+  const helmet = new THREE.Mesh(new THREE.SphereGeometry(145, 32, 20), MAT.orange);
+  helmet.position.set(-780, 960, 0);
+  helmet.castShadow = true; root.add(helmet);
+  const visor = new THREE.Mesh(
+    new THREE.SphereGeometry(148, 24, 12, Math.PI - 0.62, 1.24, 1.02, 0.78), MAT.visor);
+  visor.position.copy(helmet.position); root.add(visor);
+  const valve = new THREE.Mesh(new THREE.CylinderGeometry(42, 48, 40, 16), MAT.bone);
+  valve.position.set(-780, 1112, 0);
+  valve.castShadow = true; root.add(valve);
+}
+
+/* ============================================================
+   Interaction
+   ============================================================ */
+let stage = 0;
+const readout = document.getElementById('stageReadout');
+const READ = ['COLD', 'STAGE I', 'STAGE II', 'FULL GLOW'];
+const detents = [...document.querySelectorAll('.detents button')];
+function setStage(n) {
+  stage = n;
+  panels.forEach((p, i) => { p.target = i < n ? 1 : 0; });
+  readout.textContent = READ[n];
+  detents.forEach((b, i) => {
+    b.setAttribute('aria-pressed', String(i === n));
+    b.classList.toggle('passed', i !== 0 && i < n);
+  });
+}
+detents.forEach(b => b.addEventListener('click', () => setStage(+b.dataset.stage)));
+
+const viewBtns = [...document.querySelectorAll('.views button')];
+let tween = null;
+viewBtns.forEach(b => b.addEventListener('click', () => {
+  viewBtns.forEach(o => o.setAttribute('aria-pressed', String(o === b)));
+  controls.autoRotate = false;
+  const to = VIEWS[b.dataset.view];
+  if (reduceMotion) { camera.position.copy(to); return; }
+  tween = { from: camera.position.clone(), to: to.clone(), t: 0 };
+}));
+
+function resize() {
+  const w = stageEl.clientWidth, h = stageEl.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+
+const clock = new THREE.Clock();
+const DARK = new THREE.Color(0x191310), LIT = new THREE.Color(0xff7d1f);
+renderer.setAnimationLoop(() => {
+  const dt = Math.min(clock.getDelta(), 0.05);
+  let glowSum = 0;
+  panels.forEach(p => {
+    const rate = reduceMotion ? 1 : Math.min(1, dt * 5.5);
+    p.v += (p.target - p.v) * rate;
+    p.grp.rotation.z = p.v * 0.26;                    // 15° louvre tilt
+    p.mat.emissiveIntensity = p.v * 2.8;
+    p.mat.color.lerpColors(DARK, LIT, p.v);
+    glowSum += p.v;
+  });
+  glowLight.intensity = glowSum * 7.5;
+  if (tween) {
+    tween.t = Math.min(1, tween.t + dt / 0.9);
+    const e = 1 - Math.pow(1 - tween.t, 3);
+    camera.position.lerpVectors(tween.from, tween.to, e);
+    if (tween.t >= 1) tween = null;
+  }
+  controls.update();
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>

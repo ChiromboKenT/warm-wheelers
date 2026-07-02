@@ -1,0 +1,7 @@
+Name,Unit,Expression,Comment
+wheelbase,mm,1800 mm,Front-to-rear axle spacing (T009)
+track_width,mm,1300 mm,Left-right wheel centre spacing; anti-tip margin C1 (T009)
+ground_clearance,mm,220 mm,Floor pan underside to ground (T009)
+body_rake,deg,3 deg,Forward lean of shell - leaning heater read (T009)
+body_height,mm,1500 mm,Shell height; under RB 2500 max (T009)
+body_width,mm,2000 mm,Overall width; equals RB 2000 max (T009)

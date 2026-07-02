@@ -1,10 +1,15 @@
 import styles from "./CutawayCart.module.css";
 
 /**
- * Warm Wheelers,the machine.
- * A raked gas-heater soapbox rendered as a layered, shaded SVG: glowing grille,
- * flowing airflow streamlines, detailed rolling wheels and a boat-tail rear.
- * Geometry derived from the engineering side-cutaway in /Vision.
+ * Warm Wheelers — the machine, side profile.
+ *
+ * Rebuilt to the T018 CAD master spec (2026-07-02 validation pass): an upright,
+ * tall-narrow domestic gas heater with a **convex domed front face**, a
+ * chrome-guarded **three-panel glow grille**, an **upper view band** (the driver
+ * sees through the heater's top grille), control knobs and a nameplate — the body
+ * **boat-tails into the orange LP-gas-bottle driver pod** (the driver is the fuel),
+ * with a **welded roll hoop** over the helmet and **six wheels** (two steered up
+ * front, dual load-sharing wheels at the rear for the gas-truck read).
  *
  * `rolling` drives every animation. Set it false (e.g. inside the annotated
  * cutaway diagram) for a still, blueprint-style render with no per-frame work.
@@ -16,18 +21,35 @@ export function CutawayCart({ rolling = true }: { rolling?: boolean }) {
       className={styles.svg}
       viewBox="0 0 720 430"
       role="img"
-      aria-label="Side profile of the Warm Wheelers gas-heater soapbox: a raked heater body with a glowing grille on a low chassis with two large wheels."
+      aria-label="Side profile of the Warm Wheelers cart: an upright charcoal gas-heater body with a convex domed front, a glowing three-panel grille and an upper view band, boat-tailing into an orange gas-bottle driver pod under a roll hoop, riding on six pneumatic wheels."
       preserveAspectRatio="xMidYMid meet"
     >
       <defs>
-        <linearGradient id="ww-metal" x1="0" y1="0" x2="0.25" y2="1">
-          <stop offset="0" stopColor="#b9b1a0" />
-          <stop offset="0.45" stopColor="#8d8676" />
-          <stop offset="1" stopColor="#5c5648" />
+        {/* charcoal heater body */}
+        <linearGradient id="ww-body" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#403830" />
+          <stop offset="0.5" stopColor="#282019" />
+          <stop offset="1" stopColor="#161009" />
         </linearGradient>
-        <linearGradient id="ww-metal-edge" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#d8cfbc" />
-          <stop offset="1" stopColor="#6e685a" />
+        <linearGradient id="ww-face" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#4c4238" />
+          <stop offset="1" stopColor="#241d16" />
+        </linearGradient>
+        {/* orange LP-gas bottle pod — the driver is the fuel */}
+        <linearGradient id="ww-bottle" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#ffa648" />
+          <stop offset="0.45" stopColor="#f2701e" />
+          <stop offset="1" stopColor="#b83d10" />
+        </linearGradient>
+        <linearGradient id="ww-bottle-hi" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stopColor="#ffd9a0" stopOpacity="0.9" />
+          <stop offset="1" stopColor="#ffd9a0" stopOpacity="0" />
+        </linearGradient>
+        {/* chrome grille guard */}
+        <linearGradient id="ww-chrome" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stopColor="#f2ecdd" />
+          <stop offset="0.5" stopColor="#a49c8b" />
+          <stop offset="1" stopColor="#d7d0c0" />
         </linearGradient>
         <linearGradient id="ww-flame" x1="0" y1="1" x2="0" y2="0">
           <stop offset="0" stopColor="#c8431c" />
@@ -57,95 +79,162 @@ export function CutawayCart({ rolling = true }: { rolling?: boolean }) {
         </filter>
       </defs>
 
-      {/* ground shadow,blurred once, static */}
-      <ellipse className={styles.shadow} cx="360" cy="372" rx="246" ry="20" filter="url(#ww-soft)" />
+      {/* ground shadow — blurred once, static */}
+      <ellipse className={styles.shadow} cx="366" cy="388" rx="256" ry="18" filter="url(#ww-soft)" />
 
-      {/* airflow streamlines flowing over the body */}
+      {/* airflow streamlines sliding over the domed top and off the boat-tail */}
       <g stroke="var(--blueprint-bright)" fill="none" strokeLinecap="round">
-        <path className={`${styles.stream} ${cls(styles.streamRun) ?? ""}`} d="M40,150 C190,96 330,92 430,108 C540,126 612,168 668,228" strokeWidth="2.4" opacity="0.85" />
-        <path className={`${styles.stream} ${styles.stream2} ${cls(styles.streamRun) ?? ""}`} d="M40,196 C170,168 300,162 392,170 C470,178 540,206 590,250" strokeWidth="2" opacity="0.6" />
-        <path className={`${styles.stream} ${styles.stream3} ${cls(styles.streamRun) ?? ""}`} d="M40,250 C150,244 250,242 320,244" strokeWidth="1.6" opacity="0.45" />
+        <path className={`${styles.stream} ${cls(styles.streamRun) ?? ""}`} d="M28,120 C150,78 300,74 430,92 C540,108 604,132 676,150" strokeWidth="2.4" opacity="0.85" />
+        <path className={`${styles.stream} ${styles.stream2} ${cls(styles.streamRun) ?? ""}`} d="M28,168 C150,146 300,142 408,152 C486,160 556,186 612,214" strokeWidth="2" opacity="0.6" />
+        <path className={`${styles.stream} ${styles.stream3} ${cls(styles.streamRun) ?? ""}`} d="M28,214 C130,208 230,206 300,208" strokeWidth="1.6" opacity="0.45" />
       </g>
 
-      {/* the rolling machine,gentle bob applied to the whole rig */}
+      {/* the rolling machine — gentle bob applied to the whole rig */}
       <g className={cls(styles.bob)}>
-        {/* chassis plank */}
-        <rect x="150" y="316" width="420" height="13" rx="4" fill="url(#ww-floor)" />
-        <rect x="150" y="316" width="420" height="3" rx="2" fill="#7a7363" opacity="0.7" />
+        {/* chassis plank + low steel spine */}
+        <rect x="176" y="298" width="392" height="12" rx="4" fill="url(#ww-floor)" />
+        <rect x="176" y="298" width="392" height="3" rx="2" fill="#7a7363" opacity="0.7" />
 
-        {/* heater body,raked back, boat-tail rear */}
+        {/* ---- orange LP-gas-bottle driver pod (rear, boat-tailed) ---- */}
+        <g>
+          <path
+            d="M474,150 C540,150 592,182 592,232 C592,286 548,306 496,306 L474,306 Z"
+            fill="url(#ww-bottle)"
+            stroke="#8f2f0a"
+            strokeWidth="2.5"
+            strokeLinejoin="round"
+          />
+          {/* bottle collar + valve boss */}
+          <rect x="512" y="140" width="46" height="16" rx="6" fill="#c8541a" stroke="#8f2f0a" strokeWidth="2" />
+          <rect x="527" y="128" width="16" height="16" rx="3" fill="#9c9585" stroke="#4a463b" strokeWidth="1.5" />
+          {/* pressure bands + sheen */}
+          <path d="M486,206 C528,200 566,204 588,214" fill="none" stroke="#8f2f0a" strokeWidth="1.6" opacity="0.5" />
+          <path d="M484,250 C528,246 566,250 588,258" fill="none" stroke="#8f2f0a" strokeWidth="1.6" opacity="0.5" />
+          <path d="M494,168 C512,166 528,168 540,176 L534,250 C520,214 506,186 494,168 Z" fill="url(#ww-bottle-hi)" />
+        </g>
+
+        {/* ---- charcoal heater body: upright, ~5° lean, convex domed front ---- */}
         <path
-          d="M232,304 L300,138 C306,124 320,118 336,120 L452,134 C500,140 548,196 566,262 C572,284 570,300 560,304 Z"
-          fill="url(#ww-metal)"
-          stroke="#403b31"
+          d="M196,300
+             L184,164 C180,126 200,104 230,100
+             C316,90 404,96 462,118
+             C500,134 518,160 510,192
+             C504,216 492,232 478,242
+             L478,300 Z"
+          fill="url(#ww-body)"
+          stroke="#120d08"
           strokeWidth="3"
           strokeLinejoin="round"
         />
-        {/* top highlight sheen */}
+        {/* domed-top sheen highlight */}
         <path
-          d="M300,150 C308,136 322,132 338,134 L446,146 C488,152 528,196 548,250"
+          d="M196,168 C192,130 210,112 236,108 C312,100 398,106 456,128"
           fill="none"
-          stroke="#e7ddc8"
+          stroke="#6f6252"
           strokeWidth="3"
           strokeLinecap="round"
-          opacity="0.55"
+          opacity="0.6"
         />
-        {/* panel seam */}
-        <path d="M430,134 C452,200 452,260 446,304" fill="none" stroke="#403b31" strokeWidth="1.5" opacity="0.5" />
+        {/* ribbed side-panel seams (the silver flank cue from the reference heaters) */}
+        <g stroke="#0f0b07" strokeWidth="1.4" opacity="0.4" fill="none">
+          <path d="M300,104 L300,296" />
+          <path d="M340,104 L340,296" />
+          <path d="M380,108 L380,296" />
+        </g>
+        {/* rolled shoulder that meets the boat-tail */}
+        <path d="M462,118 C500,134 518,160 510,192 C504,212 494,226 482,236" fill="none" stroke="#0f0b07" strokeWidth="1.6" opacity="0.5" />
 
-        {/* boat-tail fin */}
-        <path d="M452,134 L470,108 C474,100 484,100 487,109 L498,150 Z" fill="url(#ww-metal-edge)" stroke="#403b31" strokeWidth="2" strokeLinejoin="round" />
+        {/* ---- convex domed front face plate ---- */}
+        <path
+          d="M196,300 L184,164 C180,126 200,104 230,100 C216,140 214,220 214,300 Z"
+          fill="url(#ww-face)"
+          stroke="#120d08"
+          strokeWidth="2"
+          strokeLinejoin="round"
+        />
 
-        {/* reclined driver,helmet + ember visor poking from the cockpit */}
+        {/* static bloom behind the grille */}
+        <ellipse className={styles.bloom} cx="196" cy="250" rx="70" ry="72" fill="url(#ww-bloom)" />
+
+        {/* ---- three-panel glow grille (lower front) ---- */}
         <g>
-          <path d="M392,150 a26,26 0 0 1 50,6 l-50,8 Z" fill="#241710" />
-          <circle cx="410" cy="150" r="20" fill="#2c1d12" stroke="#120c07" strokeWidth="2" />
-          <path d="M398,150 a14,12 0 0 1 26,2 Z" fill="var(--ember-bright)" className={cls(styles.visor)} />
+          <rect className={cls(styles.panel)} x="168" y="252" width="52" height="24" rx="4" fill="url(#ww-flame)" />
+          <rect className={`${cls(styles.panel) ?? ""} ${styles.panel2}`} x="170" y="222" width="50" height="24" rx="4" fill="url(#ww-flame)" />
+          <rect className={`${cls(styles.panel) ?? ""} ${styles.panel3}`} x="172" y="192" width="48" height="24" rx="4" fill="url(#ww-flame)" />
+        </g>
+        {/* chrome wire guard over the grille */}
+        <g stroke="url(#ww-chrome)" fill="none" strokeLinecap="round">
+          <rect x="164" y="186" width="60" height="96" rx="6" strokeWidth="3" />
+          <line x1="182" y1="188" x2="182" y2="280" strokeWidth="1.6" opacity="0.8" />
+          <line x1="196" y1="188" x2="196" y2="280" strokeWidth="1.6" opacity="0.8" />
+          <line x1="210" y1="188" x2="210" y2="280" strokeWidth="1.6" opacity="0.8" />
         </g>
 
-        {/* static bloom behind the grille,a painted-once flame halo replacing the SVG glow filter */}
-        <ellipse className={styles.bloom} cx="294" cy="247" rx="78" ry="86" fill="url(#ww-bloom)" />
-
-        {/* glowing grille,three flame panels on the raked front face */}
+        {/* ---- upper view band (the heater's top grille — driver sees through it) ---- */}
         <g>
-          <polygon className={cls(styles.panel)} points="252,296 268,258 306,272 290,310" fill="url(#ww-flame)" />
-          <polygon className={`${cls(styles.panel) ?? ""} ${styles.panel2}`} points="268,258 283,220 321,234 306,272" fill="url(#ww-flame)" />
-          <polygon className={`${cls(styles.panel) ?? ""} ${styles.panel3}`} points="283,220 298,184 336,198 321,234" fill="url(#ww-flame)" />
+          <rect x="176" y="140" width="52" height="34" rx="4" fill="#0d0a07" stroke="#3a352c" strokeWidth="1.5" />
+          {[147, 154, 161, 168].map((y) => (
+            <line key={y} x1="180" y1={y} x2="224" y2={y} stroke="#4a463b" strokeWidth="2" />
+          ))}
         </g>
-        <polygon points="252,296 298,184 336,198 290,310" fill="none" stroke="#3a2a18" strokeWidth="2" opacity="0.55" />
 
-        {/* wind vane (drives the glow) */}
-        <line x1="318" y1="270" x2="308" y2="222" stroke="#403b31" strokeWidth="2" />
-        <g className={cls(styles.vane)} style={{ transformOrigin: "318px 270px" }}>
-          <circle cx="318" cy="270" r="4" fill="#cfc8b8" />
-          <path d="M318,270 l16,-5 l-2,10 Z" fill="#cfc8b8" />
+        {/* control knobs on the top shoulder */}
+        <g>
+          <circle cx="252" cy="120" r="7" fill="#cfc8b8" stroke="#3a352c" strokeWidth="2" />
+          <circle cx="276" cy="116" r="7" fill="#cfc8b8" stroke="#3a352c" strokeWidth="2" />
+          <line x1="252" y1="120" x2="256" y2="115" stroke="#3a352c" strokeWidth="2" />
+          <line x1="276" y1="116" x2="280" y2="111" stroke="#3a352c" strokeWidth="2" />
+        </g>
+
+        {/* nameplate — WARM WHEELERS badge low on the face */}
+        <g>
+          <rect x="230" y="272" width="88" height="18" rx="4" fill="#0f0b07" stroke="#5a4128" strokeWidth="1.4" />
+          <text x="274" y="285" textAnchor="middle" fontFamily="var(--font-mono)" fontSize="9" letterSpacing="0.5" fill="var(--flame-pale)">
+            WARM WHEELERS
+          </text>
+        </g>
+
+        {/* ---- reclined driver + welded roll hoop over the pod ---- */}
+        <g>
+          {/* roll hoop arcing over the helmet */}
+          <path d="M468,300 C466,204 486,160 526,150 C568,160 588,204 586,300" fill="none" stroke="#9c9585" strokeWidth="7" strokeLinecap="round" opacity="0.85" />
+          <path d="M468,300 C466,204 486,160 526,150 C568,160 588,204 586,300" fill="none" stroke="#e7ddc8" strokeWidth="2" strokeLinecap="round" opacity="0.5" />
+          {/* helmet + ember visor poking from the open pod top */}
+          <circle cx="526" cy="164" r="21" fill="#2c1d12" stroke="#120c07" strokeWidth="2" />
+          <path d="M512,166 a14,11 0 0 1 28,1 Z" fill="var(--ember-bright)" className={cls(styles.visor)} />
         </g>
       </g>
 
       {/* ---- front wheel (steered) ---- */}
-      <g transform="translate(196,340)">
-        <circle r="54" fill="url(#ww-tire)" />
-        <circle r="54" fill="none" stroke="#0d0a07" strokeWidth="3" />
+      <g transform="translate(230,344)">
+        <circle r="50" fill="url(#ww-tire)" />
+        <circle r="50" fill="none" stroke="#0d0a07" strokeWidth="3" />
         <g className={cls(styles.roll)}>
-          <circle r="33" fill="url(#ww-rim)" stroke="#3a352c" strokeWidth="2" />
+          <circle r="30" fill="url(#ww-rim)" stroke="#3a352c" strokeWidth="2" />
           {[0, 60, 120, 180, 240, 300].map((a) => (
-            <rect key={a} x="-2.5" y="-32" width="5" height="28" rx="2" fill="#4a463b" transform={`rotate(${a})`} />
+            <rect key={a} x="-2.4" y="-29" width="4.8" height="26" rx="2" fill="#4a463b" transform={`rotate(${a})`} />
           ))}
-          <circle r="9" fill="#cfc8b8" stroke="#3a352c" strokeWidth="2" />
+          <circle r="8" fill="#cfc8b8" stroke="#3a352c" strokeWidth="2" />
         </g>
       </g>
 
-      {/* ---- rear wheel (disc brake) ---- */}
-      <g transform="translate(520,340)">
-        <circle r="54" fill="url(#ww-tire)" />
-        <circle r="54" fill="none" stroke="#0d0a07" strokeWidth="3" />
+      {/* ---- rear duals (load-sharing pair, disc brake) — outboard twin peeks behind ---- */}
+      <g transform="translate(556,344)">
+        <circle r="48" fill="#100c08" />
+        <circle r="48" fill="none" stroke="#0d0a07" strokeWidth="3" />
+        <circle r="26" fill="#2b271f" stroke="#3a352c" strokeWidth="2" />
+      </g>
+      <g transform="translate(522,344)">
+        <circle r="50" fill="url(#ww-tire)" />
+        <circle r="50" fill="none" stroke="#0d0a07" strokeWidth="3" />
         <g className={cls(styles.roll)}>
-          <circle r="33" fill="url(#ww-rim)" stroke="#3a352c" strokeWidth="2" />
+          <circle r="30" fill="url(#ww-rim)" stroke="#3a352c" strokeWidth="2" />
           {[0, 60, 120, 180, 240, 300].map((a) => (
-            <rect key={a} x="-2.5" y="-32" width="5" height="28" rx="2" fill="#4a463b" transform={`rotate(${a})`} />
+            <rect key={a} x="-2.4" y="-29" width="4.8" height="26" rx="2" fill="#4a463b" transform={`rotate(${a})`} />
           ))}
-          <circle r="22" fill="none" stroke="#9c9585" strokeWidth="3" opacity="0.5" />
-          <circle r="9" fill="#cfc8b8" stroke="#3a352c" strokeWidth="2" />
+          {/* brake disc */}
+          <circle r="20" fill="none" stroke="#9c9585" strokeWidth="3" opacity="0.55" />
+          <circle r="8" fill="#cfc8b8" stroke="#3a352c" strokeWidth="2" />
         </g>
       </g>
     </svg>

@@ -1,0 +1,14 @@
+Name,Unit,Expression,Comment
+body_length,mm,2350 mm,Overall length (T009)
+wheel_dia,mm,400 mm,ASSUMPTION confirm - sets axle height 200 vs ground_clearance 220 (T009 open item)
+wheel_width,mm,80 mm,Proxy tyre width
+axle_dia,mm,30 mm,Proxy axle stub diameter
+driver_cyl_dia,mm,600 mm,Reclined driver + bottle costume envelope - confirm vs T008
+driver_cyl_len,mm,1200 mm,Reclined driver length - confirm vs T008
+driver_axis_z,mm,ground_clearance + driver_cyl_dia / 2,Driver cylinder axis height; rests on floor for low CoG (C5)
+driver_center_x,mm,-100 mm,Driver slightly aft of mid-wheelbase - tune after CoG
+seat_pan_z,mm,300 mm,Top of seat pan above ground
+seat_width,mm,450 mm,Seat pan and back width
+seat_back_height,mm,600 mm,Backrest height above pan
+roll_clearance,mm,50 mm,Min helmet-to-roll-structure gap (S2)
+head_top_z,mm,950 mm,Est top of helmet reclined - confirm vs T008; sets roll hoop height

@@ -1,0 +1,49 @@
+Name,Unit,Expression,Comment
+max_len,mm,6000 mm,RB hard limit - overall length must be under this (handbook 2)
+max_width,mm,2000 mm,RB hard limit - overall width must be UNDER 2 m (handbook 2)
+max_height,mm,2500 mm,RB hard limit - overall height must be under this (handbook 2)
+mass_limit,kg,80 kg,RB CONFIRMED max race mass EXCLUDING driver (handbook 2) - binding
+min_ground_clearance,mm,100 mm,RB min ground clearance (UK rules); we design to 150 (handbook 2)
+wheelbase,mm,1700 mm,Front-to-rear axle spacing; track ~0.70x wheelbase = stable ratio
+track_width,mm,1200 mm,Left-right wheel centreline spacing - CAPPED at 1200 by builder
+wheel_dia,mm,260 mm,Rybro 260 pneumatic OD (25 mm fixed bore T019 2.1); sets axle line at 130 mm
+wheel_width,mm,85 mm,Single tyre section width
+rear_dual_gap,mm,25 mm,Gap between the two paired rear tyres (dual-rear truck layout)
+rear_pair_width,mm,2 * wheel_width + rear_dual_gap,Total width of one rear dual pair = 195 mm
+axle_height,mm,wheel_dia / 2,Axle centreline height above ground = 130 mm (sits below the 150 deck line on drop-brackets)
+ground_clearance,mm,150 mm,Chassis underside to ground; nose set higher (~180) for ramp lip
+overall_width_calc,mm,track_width + rear_pair_width,Approx overall width over rear duals = 1395 mm (< max_width OK)
+body_width,mm,1300 mm,Shell width - sits inboard of the wheels; narrow heater read
+body_height,mm,1450 mm,Shell height - tall heater, large margin under 2500
+body_length_main,mm,1850 mm,Main heater-box length before the boat-tail
+body_front_x,mm,1200 mm,X of the main box flat front face (longitudinal datum); dome apex = body_front_x + front_dome_depth. See T018 3.1
+boattail_len,mm,500 mm,Rear taper length into the gas-bottle driver pod
+overall_length_calc,mm,body_length_main + boattail_len + front_dome_depth,Approx overall length incl domed nose = 2550 mm (< max_len OK)
+body_rake,deg,5 deg,Slight backward lean; main aero comes from the domed front + boat-tail
+front_dome_depth,mm,200 mm,How far the convex front face bows forward at mid-height
+driver_height,mm,1880 mm,95th-percentile male standing height (design driver)
+driver_mass,kg,95 kg,95th-percentile male mass (NOT counted in the 80 kg cart limit)
+shoulder_width,mm,530 mm,Clothed shoulder breadth - sets cockpit and roll-hoop width
+driver_pkg_len,mm,1450 mm,Reclined driver package length along X (feet forward)
+driver_center_x,mm,-100 mm,Driver/torso centre X aft of mid-wheelbase; TUNABLE - adjust for 45-55% front balance (C3). Used by T020 under-seat cross member and T023/T025 pod
+recline_angle,deg,35 deg,Torso recline from horizontal - low CoG, feet forward
+seat_pan_z,mm,280 mm,Top of seat pan above ground - hips low for CoG
+driver_cg_z,mm,380 mm,Target driver mass-centre height - dominates total CoG
+head_top_z,mm,1050 mm,Top of helmet when reclined - sets roll-hoop height
+roll_clearance,mm,50 mm,Min helmet-to-roll-structure gap (S2)
+roll_hoop_z,mm,head_top_z + 2 * roll_clearance,Roll-hoop apex height = 1150 mm (above helmet, inside shell)
+cog_target_z,mm,0.45 * track_width,Max allowable CoG height for anti-tip (C1) = 540 mm
+steering_lock,deg,30 deg,Max steer angle each side - sets turning radius
+disc_dia,mm,160 mm,Rear brake disc diameter (one per side, two circuits)
+kingpin_track,mm,1120 mm,Kingpin centre spacing (slightly inboard of wheel centres)
+caster_angle,deg,4 deg,Kingpin rearward lean for self-centring (T021 2; keep 3-5)
+rear_axle_dia,mm,32 mm,Central rear-axle section (stepped axle option A T019 5.4); stub ends stay 25 mm to match wheel bore
+frame_tube,mm,30 mm,Spine/hoop square-tube size (1.6-2 mm wall); sets the deck stack (T020 3.1)
+deck_thickness,mm,12 mm,Shutterply deck thickness (T020 3.2)
+deck_top_z,mm,ground_clearance + frame_tube + deck_thickness,Top of the ply deck = 192 mm; longeron underside sits AT ground_clearance (T020 3.1 stack)
+harness_bar_z,mm,620 mm,Harness cross-bar height on the roll hoop = driver shoulder height; straps must run 0-40 deg DOWN behind the shoulders never up to the apex (T025 4)
+pod_end_dia,mm,700 mm,Boat-tail end cross-section (approx circle) at X = -1150; reads as the gas-bottle pod (T023 3.3)
+pod_center_z,mm,650 mm,Height of the pod end-section centre; bottom edge 300 clears the rear duals (T023 3.3)
+view_band_lo,mm,650 mm,Bottom of the see-through mesh band in the front face - driver sightline to road ~5 m ahead of the nose (T023 3.2 / T025 5)
+view_band_hi,mm,1050 mm,Top of the see-through mesh band; reads as the heater upper grille (T023 3.2)
+wheelwell_clearance,mm,25 mm,Min gap shell/deck to any tyre surface incl full steering sweep (T023 3.6)

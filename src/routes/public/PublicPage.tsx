@@ -1,5 +1,5 @@
-import { useMemo, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { useTasks } from "../../store/useTasks";
 import { useSettings } from "../../store/useSettings";
 import { deriveMetrics } from "../../domain/progress";
@@ -31,6 +31,15 @@ export function PublicPage() {
   const heroRef = useRef<HTMLElement>(null);
   const heroRect = useRef<DOMRect | null>(null);
   const frame = useRef(0);
+  const { hash } = useLocation();
+
+  // Let section links work across routes (e.g. /#cutaway from the 3D preview page).
+  // Wait for content to mount before resolving the target.
+  useEffect(() => {
+    if (!hash || tasksLoading || settingsLoading) return;
+    const el = document.querySelector(hash);
+    if (el) requestAnimationFrame(() => el.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }, [hash, tasksLoading, settingsLoading]);
 
   const m = deriveMetrics(tasks);
   const displayError = tasksError ?? settingsError;
@@ -138,7 +147,15 @@ export function PublicPage() {
             <div className={styles.cartFloat}>
               <CutawayCart />
             </div>
-            <div className={styles.cartTag}>side profile · v0.1</div>
+            <div className={styles.cartTag}>side profile · T018 master spec</div>
+            <Link to="/preview" className={styles.previewCta}>
+              <span className={styles.previewCtaSpark} aria-hidden="true" />
+              <span className={styles.previewCtaText}>
+                Open the interactive 3D preview
+                <em>orbit the cart · ignite the glow</em>
+              </span>
+              <span className={styles.previewCtaArrow} aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
 
@@ -170,6 +187,9 @@ export function PublicPage() {
             <span>Red Bull Soapbox · build in public</span>
           </div>
           <div className={styles.footLinks}>
+            <Link to="/preview" className={styles.footLink}>
+              Design preview →
+            </Link>
             <a href="#contact" className={styles.footLink}>
               Get in touch →
             </a>

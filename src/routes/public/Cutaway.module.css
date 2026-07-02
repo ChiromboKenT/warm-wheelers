@@ -110,6 +110,9 @@
   border-radius: 50%;
   border: 1px solid rgba(255, 179, 36, 0.4);
   animation: ww-pulse 2.4s ease-in-out infinite;
+  /* decorative only — must never capture the pointer, or the pulsing ring
+     enlarges the hit area and steals hover from neighbouring pins */
+  pointer-events: none;
 }
 
 .spot:hover,
@@ -153,6 +156,8 @@
   line-height: 1.02;
   margin: 14px 0 10px;
   color: var(--paper);
+  /* reserve two lines so a 1↔2 line title can't reflow the chips below */
+  min-height: 2.1em;
 }
 
 .readBody {
@@ -160,7 +165,9 @@
   line-height: 1.6;
   color: #d7c4a6;
   margin: 0 0 22px;
-  min-height: 84px;
+  /* hold the tallest body's height so switching hotspots never changes the
+     layout under the cursor (which would bounce hover between two pins/chips) */
+  min-height: 164px;
 }
 
 .chips {
@@ -201,8 +208,5 @@
   .grid {
     grid-template-columns: 1fr;
     gap: 20px;
-  }
-  .readBody {
-    min-height: 0;
   }
 }
